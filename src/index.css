@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 254 44% 7%;
+    --foreground: 252 40% 97%;
+
+    --card: 256 36% 12%;
+    --card-foreground: 252 40% 97%;
+
+    --popover: 256 36% 12%;
+    --popover-foreground: 252 40% 97%;
+
+    --primary: 259 95% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 262 28% 18%;
+    --secondary-foreground: 252 22% 90%;
+
+    --muted: 258 24% 16%;
+    --muted-foreground: 252 16% 72%;
+
+    --accent: 311 45% 18%;
+    --accent-foreground: 313 28% 91%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 259 42% 70% / 0.2;
+    --input: 258 24% 18%;
+    --ring: 296 82% 74%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --surface-elevated: 258 30% 14%;
+    --metric: 296 82% 74%;
+    --text-tertiary: 254 14% 66%;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -1px rgba(0,0,0,0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -2px rgba(0,0,0,0.3);
+    --shadow-card-hover: 0 20px 25px -5px rgba(0,0,0,0.4), 0 10px 10px -5px rgba(0,0,0,0.2);
+
+    --sidebar-background: 256 42% 10%;
+    --sidebar-foreground: 252 22% 90%;
+    --sidebar-primary: 259 95% 65%;
+    --sidebar-primary-foreground: 252 45% 98%;
+    --sidebar-accent: 311 40% 18%;
+    --sidebar-accent-foreground: 312 30% 92%;
+    --sidebar-border: 259 32% 32%;
+    --sidebar-ring: 296 82% 74%;
+
+    /* RainbowButton gradient stops */
+    --color-1: #A07CFE;
+    --color-2: #FE8FB5;
+    --color-3: #FFBE7B;
+    --color-4: #7DD3FC;
+    --color-5: #34D399;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(55% 45% at 50% -8%, hsla(259, 95%, 65%, 0.24), transparent 65%),
+      radial-gradient(48% 40% at 82% 10%, hsla(311, 95%, 76%, 0.16), transparent 72%),
+      linear-gradient(180deg, hsl(var(--background)) 0%, hsl(257 42% 8%) 100%);
+    background-attachment: fixed;
+    font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Instrument Sans', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Instrument Sans', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.03em;
+  }
+
+  .font-mono-data {
+    font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .animate-slide-up-delay {
+    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+    opacity: 0;
+  }
+
+  .animate-slide-up-delay-2 {
+    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
