@@ -39,10 +39,10 @@ const Tools = () => {
             Free Tools
           </p>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4 text-balance">
-            Agency-Built Tools. Free to Use.
+            Agency-Built AI Tools. Free to Use.
           </h2>
           <p className="text-muted-foreground">
-            We build internal tools and share them with the world.
+            We build internal AI tools and share them with the world. A taste of what we deploy for clients.
           </p>
         </div>
 

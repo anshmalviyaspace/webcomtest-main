@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import Navbar from "@/components/Navbar";
+import CardNav from "@/components/CardNav";
 import Hero from "@/components/Hero";
 
 const HomeBelowFold = lazy(() => import("./HomeBelowFold"));
@@ -7,7 +7,7 @@ const HomeBelowFold = lazy(() => import("./HomeBelowFold"));
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
+      <CardNav />
       <Hero />
       <Suspense
         fallback={

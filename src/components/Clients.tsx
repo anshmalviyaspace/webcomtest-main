@@ -43,7 +43,7 @@ function TestimonialCard({
   company: string;
 }) {
   return (
-    <div className="relative w-[min(22rem,calc(100vw-2.5rem))] shrink-0 rounded-2xl border border-border/60 bg-gradient-to-b from-background/90 via-background/75 to-background/60 p-6 shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
+    <div className="relative w-[min(22rem,calc(100vw-2.5rem))] shrink-0 rounded-2xl border border-primary/10 bg-gradient-to-b from-background/90 via-background/75 to-background/60 p-6 shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
       <p className="text-sm text-muted-foreground leading-relaxed mb-5">&ldquo;{quote}&rdquo;</p>
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15 text-sm font-display font-semibold text-primary">
@@ -71,9 +71,9 @@ const Clients = () => {
             Testimonials
           </p>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4 text-balance">
-            What Our Clients Say
+            What Brands Say After We Automate Their Growth
           </h2>
-          <p className="text-muted-foreground">Real feedback from brands we&apos;ve scaled.</p>
+          <p className="text-muted-foreground">Real results from real businesses we've transformed.</p>
         </div>
       </div>
 

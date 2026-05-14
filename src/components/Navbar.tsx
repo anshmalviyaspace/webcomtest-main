@@ -5,9 +5,9 @@ import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 const navLinks = [
   { label: "Services", href: "#services" },
-  { label: "Results", href: "#metrics" },
+  { label: "How We Work", href: "#philosophy" },
   { label: "Tools", href: "#tools" },
-  { label: "Clients", href: "#clients" },
+  { label: "Results", href: "#clients" },
   { label: "About", href: "#values" },
 ];
 
@@ -24,11 +24,11 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-md shadow-sm" : "bg-transparent"
+        scrolled ? "bg-background/80 backdrop-blur-md shadow-sm border-b border-border/30" : "bg-transparent"
       }`}
     >
       <div className="container px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14 md:h-20">
-        <a href="#" className="flex items-center gap-1.5 font-display text-lg md:text-xl font-bold">
+        <a href="#" className="flex items-center gap-2 font-display text-lg md:text-xl font-bold">
           <img
             src={logoWhite}
             alt="WebCom Media"
@@ -37,14 +37,15 @@ const Navbar = () => {
           <span className="text-foreground">WebCom Media</span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-7">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
             >
               {link.label}
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </nav>
@@ -54,9 +55,9 @@ const Navbar = () => {
             as="a"
             href="#cta"
             containerClassName="rounded-lg"
-            innerClassName="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:-translate-y-px hover:shadow-md active:scale-[0.98]"
+            innerClassName="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:-translate-y-px hover:shadow-[0_0_20px_hsla(259,95%,65%,0.4)] active:scale-[0.98]"
           >
-            Book a Call
+            Book an AI Audit
           </HoverBorderGradient>
         </div>
 
@@ -73,7 +74,7 @@ const Navbar = () => {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border">
+        <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border/40">
           <nav className="container flex flex-col py-4 gap-1">
             {navLinks.map((link) => (
               <a
@@ -92,7 +93,7 @@ const Navbar = () => {
               containerClassName="rounded-lg mt-2"
               innerClassName="inline-flex w-full items-center justify-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:-translate-y-px hover:shadow-md active:scale-[0.98]"
             >
-              Book a Call
+              Book an AI Audit
             </HoverBorderGradient>
           </nav>
         </div>

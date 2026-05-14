@@ -2,6 +2,8 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import MetricBar from "@/components/MetricBar";
 import Philosophy from "@/components/Philosophy";
 import Services from "@/components/Services";
+import OrbSection from "@/components/OrbSection";
+import GlowDivider from "@/components/GlowDivider";
 import TrustLogos from "@/components/TrustLogos";
 import Clients from "@/components/Clients";
 import Values from "@/components/Values";
@@ -26,9 +28,6 @@ function ToolsSectionSkeleton() {
   );
 }
 
-/**
- * Defers downloading GSAP + MagicBento until the tools block is near the viewport.
- */
 function DeferredTools() {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [load, setLoad] = useState(false);
@@ -36,7 +35,6 @@ function DeferredTools() {
   useEffect(() => {
     const el = sentinelRef.current;
     if (!el) return;
-
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting) {
@@ -68,13 +66,23 @@ const HomeBelowFold = () => {
   return (
     <>
       <MetricBar />
+      <GlowDivider />
       <Philosophy />
+      <GlowDivider />
       <Services />
+      <GlowDivider />
+      <OrbSection />
+      <GlowDivider />
       <DeferredTools />
+      <GlowDivider />
       <TrustLogos />
+      <GlowDivider />
       <Clients />
+      <GlowDivider />
       <Values />
+      <GlowDivider />
       <Founder />
+      <GlowDivider />
       <CTA />
       <Footer />
     </>
