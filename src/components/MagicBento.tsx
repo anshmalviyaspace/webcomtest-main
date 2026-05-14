@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 export interface BentoCardProps {
   color?: string;
@@ -92,15 +93,25 @@ const CardInner = ({ card, textAutoHide }: { card: BentoCardProps; textAutoHide:
         {card.description}
       </p>
       {card.href ? (
-        <a
-          href={card.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline w-fit"
-          onClick={(e) => e.stopPropagation()}
-        >
-          Use Free Tool <ArrowRight size={14} />
-        </a>
+        card.href.startsWith("/") ? (
+          <Link
+            to={card.href}
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline w-fit"
+            onClick={(e) => e.stopPropagation()}
+          >
+            Use Free Tool <ArrowRight size={14} />
+          </Link>
+        ) : (
+          <a
+            href={card.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline w-fit"
+            onClick={(e) => e.stopPropagation()}
+          >
+            Use Free Tool <ArrowRight size={14} />
+          </a>
+        )
       ) : null}
     </div>
   </>

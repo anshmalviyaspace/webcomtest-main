@@ -6,19 +6,19 @@ const tools = [
     title: "Ads Campaign Strategy Generator",
     description: "Generate a full campaign strategy in 60 seconds using AI",
     status: "live" as const,
-    url: "https://adscampaign.lovable.app/",
+    url: "/tools/ads-campaign",
   },
   {
     title: "ROAS Calculator AI",
     description: "Get instant insights on ad spend and maximizing ROAS recommendations",
     status: "live" as const,
-    url: "https://roascal.lovable.app/",
+    url: "/tools/roas-calculator",
   },
   {
     title: "Ads Doctor AI",
     description: "Upload Your Ads dashboard Screenshot. Get Exact Actions in Seconds.",
     status: "live" as const,
-    url: "https://adsanalyser.lovable.app/",
+    url: "/tools/ads-doctor",
   },
 ];
 
