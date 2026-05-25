@@ -1,4 +1,6 @@
 import CountUp from "@/components/CountUp";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 
 const metrics = [
   {
@@ -36,8 +38,11 @@ const metrics = [
 ];
 
 const MetricBar = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+
   return (
-    <section id="metrics" className="py-10 md:py-16 bg-card border-y border-border/60 relative overflow-hidden">
+    <section id="metrics" className="py-10 md:py-16 bg-card border-y border-white/5 relative overflow-hidden">
       {/* Glow */}
       <div
         className="pointer-events-none absolute inset-0"
@@ -46,13 +51,15 @@ const MetricBar = () => {
           background: "radial-gradient(ellipse 80% 60% at 50% 50%, hsla(259,95%,65%,0.06), transparent 70%)",
         }}
       />
-      <div className="container mx-auto px-4 relative z-10">
+      <div ref={ref} className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {metrics.map((metric, i) => (
-            <div
+            <motion.div
               key={metric.label}
               className="group text-center space-y-1 p-3 sm:p-4 rounded-2xl border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all duration-300"
-              style={{ animationDelay: `${i * 0.1}s` }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary inline-flex flex-wrap items-baseline justify-center gap-0.5">
                 {metric.prefix ? <span>{metric.prefix}</span> : null}
@@ -70,7 +77,7 @@ const MetricBar = () => {
               </p>
               <p className="text-xs sm:text-sm font-medium text-foreground">{metric.label}</p>
               <p className="text-[10px] sm:text-xs text-muted-foreground font-mono-data">{metric.sub}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

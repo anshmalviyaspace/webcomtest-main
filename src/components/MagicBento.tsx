@@ -721,7 +721,7 @@ const MagicBento: React.FC<BentoProps> = ({
             padding: 0.5rem;
           }
 
-          @media (min-width: 640px) {
+          @media (min-width: 480px) {
             .card-responsive-even {
               grid-template-columns: repeat(2, 1fr);
             }
@@ -730,6 +730,14 @@ const MagicBento: React.FC<BentoProps> = ({
           @media (min-width: 1024px) {
             .card-responsive-even {
               grid-template-columns: repeat(3, 1fr);
+            }
+          }
+
+          /* Mobile: compact card height for even layout */
+          @media (max-width: 479px) {
+            .card-responsive-even .card {
+              min-height: 140px !important;
+              aspect-ratio: auto !important;
             }
           }
 
@@ -847,7 +855,7 @@ const MagicBento: React.FC<BentoProps> = ({
       <BentoCardGrid gridRef={gridRef} maxWidthClass={layout === "even" ? "max-w-6xl" : undefined}>
         <div className={`${gridClass} grid gap-2`}>
           {cardData.map((card, index) => {
-            const baseClassName = `card flex flex-col justify-between relative aspect-[4/3] min-h-[200px] w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-colors duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${
+            const baseClassName = `card flex flex-col justify-between relative min-h-[160px] sm:aspect-[4/3] sm:min-h-[200px] w-full max-w-full p-4 sm:p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-colors duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${
               enableBorderGlow ? "card--border-glow" : ""
             }`;
 

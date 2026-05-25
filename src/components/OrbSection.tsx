@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Brain, Zap, BarChart3, Bot, Workflow, TrendingUp, ArrowRight } from "lucide-react";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { motion, useInView } from "motion/react";
 
 /* ─── Deep-space particle + connection canvas ─── */
 const SpaceCanvas = () => {
@@ -171,6 +172,13 @@ const features = [
 ];
 
 const OrbSection = () => {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-80px" });
+  const leftRef = useRef<HTMLDivElement>(null);
+  const leftInView = useInView(leftRef, { once: true, margin: "-60px" });
+  const rightRef = useRef<HTMLDivElement>(null);
+  const rightInView = useInView(rightRef, { once: true, margin: "-60px" });
+
   return (
     <section className="relative overflow-hidden bg-card py-16 md:py-28 lg:py-36">
       {/* Full-section particle canvas */}
@@ -178,7 +186,7 @@ const OrbSection = () => {
         <SpaceCanvas />
       </div>
 
-      {/* Large atmospheric background glow — the signature look */}
+      {/* Large atmospheric background glow */}
       <div
         className="pointer-events-none absolute"
         aria-hidden
@@ -208,23 +216,39 @@ const OrbSection = () => {
 
       <div className="container px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section label */}
-        <div className="text-center mb-12 md:mb-16">
-          <p className="text-xs font-mono-data tracking-widest text-primary uppercase mb-4">
+        <div ref={headerRef} className="text-center mb-12 md:mb-16">
+          <motion.p
+            className="text-xs font-mono-data tracking-widest text-primary uppercase mb-4"
+            initial={{ opacity: 0, y: 16 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
             The Intelligence Layer
-          </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground text-balance leading-[1.1] max-w-3xl mx-auto">
+          </motion.p>
+          <motion.h2
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground text-balance leading-[1.1] max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 24 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             One AI brain running<br className="hidden sm:block" />
             <span className="text-primary"> every channel at once.</span>
-          </h2>
+          </motion.h2>
         </div>
 
         {/* Main layout: features left | orb center | features right */}
         <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-0">
 
           {/* Left features */}
-          <div className="flex-1 space-y-6 lg:space-y-8 lg:pr-8">
-            {features.slice(0, 3).map((f) => (
-              <div key={f.title} className="flex items-start gap-4 group">
+          <div ref={leftRef} className="flex-1 space-y-6 lg:space-y-8 lg:pr-8">
+            {features.slice(0, 3).map((f, i) => (
+              <motion.div
+                key={f.title}
+                className="flex items-start gap-4 group"
+                initial={{ opacity: 0, x: -24 }}
+                animate={leftInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: i * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
+              >
                 <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary/20 group-hover:border-primary/40 group-hover:shadow-[0_0_20px_hsla(259,95%,65%,0.2)] transition-all duration-300">
                   <f.icon size={18} className="text-primary" />
                 </div>
@@ -234,14 +258,13 @@ const OrbSection = () => {
                   </h4>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Center orb — hidden on mobile, shown md+ */}
           <div className="hidden md:flex flex-col items-center justify-center shrink-0 px-4 lg:px-8">
             <DeepOrb />
-            {/* Live status pill below orb */}
             <div className="mt-6 flex items-center gap-2 px-4 py-2 rounded-full border border-primary/25 bg-card/80 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
               <span className="text-[10px] font-mono-data text-muted-foreground">System online · 3 automations active</span>
@@ -249,9 +272,15 @@ const OrbSection = () => {
           </div>
 
           {/* Right features */}
-          <div className="flex-1 space-y-6 lg:space-y-8 lg:pl-8">
-            {features.slice(3).map((f) => (
-              <div key={f.title} className="flex items-start gap-4 group">
+          <div ref={rightRef} className="flex-1 space-y-6 lg:space-y-8 lg:pl-8">
+            {features.slice(3).map((f, i) => (
+              <motion.div
+                key={f.title}
+                className="flex items-start gap-4 group"
+                initial={{ opacity: 0, x: 24 }}
+                animate={rightInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: i * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
+              >
                 <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary/20 group-hover:border-primary/40 group-hover:shadow-[0_0_20px_hsla(259,95%,65%,0.2)] transition-all duration-300">
                   <f.icon size={18} className="text-primary" />
                 </div>
@@ -261,12 +290,12 @@ const OrbSection = () => {
                   </h4>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Mobile orb — shown only on small screens */}
+        {/* Mobile orb */}
         <div className="flex md:hidden flex-col items-center mt-10">
           <DeepOrb />
           <div className="mt-5 flex items-center gap-2 px-4 py-2 rounded-full border border-primary/25 bg-card/80 backdrop-blur-sm">
@@ -276,7 +305,13 @@ const OrbSection = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-14 md:mt-20 text-center">
+        <motion.div
+          className="mt-14 md:mt-20 text-center"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           <HoverBorderGradient
             as="a"
             href="#cta"
@@ -286,7 +321,7 @@ const OrbSection = () => {
             Get Your AI System Built
             <ArrowRight size={16} />
           </HoverBorderGradient>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

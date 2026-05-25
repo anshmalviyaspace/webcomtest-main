@@ -1,4 +1,6 @@
 import { Marquee } from "@/components/ui/marquee";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 
 const testimonials = [
   {
@@ -63,17 +65,37 @@ const marqueeCards = testimonials.map((t) => (
 ));
 
 const Clients = () => {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
+
   return (
     <section id="clients" className="py-10 md:py-28 bg-card overflow-hidden">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="max-w-lg mb-10 md:mb-12">
-          <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-4">
+        <div ref={headerRef} className="max-w-lg mb-10 md:mb-12">
+          <motion.p
+            className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-4"
+            initial={{ opacity: 0, y: 16 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
             Testimonials
-          </p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4 text-balance">
+          </motion.p>
+          <motion.h2
+            className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4 text-balance"
+            initial={{ opacity: 0, y: 24 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             What Brands Say After We Automate Their Growth
-          </h2>
-          <p className="text-muted-foreground">Real results from real businesses we've transformed.</p>
+          </motion.h2>
+          <motion.p
+            className="text-muted-foreground"
+            initial={{ opacity: 0, y: 16 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Real results from real businesses we've transformed.
+          </motion.p>
         </div>
       </div>
 

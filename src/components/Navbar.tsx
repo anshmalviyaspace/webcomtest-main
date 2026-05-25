@@ -32,7 +32,7 @@ const Navbar = () => {
           <img
             src={logoWhite}
             alt="WebCom Media"
-            className="h-7 md:h-9 w-auto transition-opacity duration-300"
+            className="h-8 md:h-11 w-auto transition-opacity duration-300"
           />
           <span className="text-foreground">WebCom Media</span>
         </a>

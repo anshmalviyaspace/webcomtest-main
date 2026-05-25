@@ -1,5 +1,7 @@
 import MagicBento from "@/components/MagicBento";
 import type { BentoCardProps } from "@/components/MagicBento";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 
 const tools = [
   {
@@ -31,19 +33,37 @@ const toolBentoItems: BentoCardProps[] = tools.map((tool) => ({
 }));
 
 const Tools = () => {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
+
   return (
     <section id="tools" className="py-10 md:py-28">
       <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="max-w-lg mb-12">
-          <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-4">
+        <div ref={headerRef} className="max-w-lg mb-12">
+          <motion.p
+            className="text-xs font-medium tracking-widest text-muted-foreground uppercase mb-4"
+            initial={{ opacity: 0, y: 16 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
             Free Tools
-          </p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4 text-balance">
+          </motion.p>
+          <motion.h2
+            className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4 text-balance"
+            initial={{ opacity: 0, y: 24 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             Agency-Built AI Tools. Free to Use.
-          </h2>
-          <p className="text-muted-foreground">
+          </motion.h2>
+          <motion.p
+            className="text-muted-foreground"
+            initial={{ opacity: 0, y: 16 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             We build internal AI tools and share them with the world. A taste of what we deploy for clients.
-          </p>
+          </motion.p>
         </div>
 
         <MagicBento

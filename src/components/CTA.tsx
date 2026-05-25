@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ArrowRight, CheckCircle, Bot, BarChart3, Workflow, Zap, ChevronLeft, ChevronRight, Clock, Calendar } from "lucide-react";
 import { ShineBorder } from "@/registry/magicui/shine-border";
+import { motion, useInView } from "motion/react";
 import {
   format,
   addMonths,
@@ -133,6 +134,8 @@ const CTA = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [booked, setBooked]             = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-80px" });
 
   const canBook = selectedDate !== null && selectedTime !== null;
 
@@ -164,14 +167,24 @@ const CTA = () => {
       <div className="container px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/10 mb-6">
+        <div ref={headerRef} className="text-center mb-12 md:mb-16">
+          <motion.div
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/10 mb-6"
+            initial={{ opacity: 0, y: 16 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+          >
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             <span className="text-xs font-mono-data text-primary tracking-widest uppercase">Free AI Audit Call</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground text-balance leading-[1.1] max-w-3xl mx-auto">
+          </motion.div>
+          <motion.h2
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground text-balance leading-[1.1] max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 24 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             Find out exactly how AI can transform your marketing in 15 minutes.
-          </h2>
+          </motion.h2>
         </div>
 
         {/* Three-column grid */}
@@ -201,7 +214,7 @@ const CTA = () => {
           </div>
 
           {/* Col 2 — Calendar + time picker */}
-          <div className="relative overflow-hidden rounded-2xl border border-border/40 bg-background/60 p-5 sm:p-6">
+          <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-background/60 p-5 sm:p-6">
             <ShineBorder
               shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
               borderWidth={1}
@@ -288,7 +301,7 @@ const CTA = () => {
           </div>
 
           {/* Col 3 — What's included */}
-          <div className="relative overflow-hidden rounded-2xl border border-border/40 bg-background/60 p-5 sm:p-6">
+          <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-background/60 p-5 sm:p-6">
             <ShineBorder
               shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
               borderWidth={1}

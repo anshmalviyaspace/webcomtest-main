@@ -187,7 +187,7 @@ const Hero = () => {
               intensity={1} rotationSpeed={0.3} glowAmount={0.002}
               pillarWidth={3} pillarHeight={0.4} noiseIntensity={0.5}
               pillarRotation={25} interactive={false}
-              mixBlendMode="screen" quality="low"
+              mixBlendMode="screen" quality="high"
             />
           </Suspense>
         )}
