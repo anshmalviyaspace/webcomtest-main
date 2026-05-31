@@ -4,15 +4,15 @@ import logoWhite from "@/assets/logo-white.png";
 
 const toolMap: Record<string, { title: string; url: string }> = {
   "ads-campaign": {
-    title: "Ads Campaign Strategy Generator",
+    title: "Campaign Strategy Assessment",
     url: "https://adscampaign.lovable.app/",
   },
   "roas-calculator": {
-    title: "ROAS Calculator AI",
+    title: "Spend & Efficiency Check",
     url: "https://roascal.lovable.app/",
   },
   "ads-doctor": {
-    title: "Ads Doctor AI",
+    title: "Ads Health Snapshot",
     url: "https://adsanalyser.lovable.app/",
   },
 };

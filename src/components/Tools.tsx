@@ -2,23 +2,24 @@ import MagicBento from "@/components/MagicBento";
 import type { BentoCardProps } from "@/components/MagicBento";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import { usePerformanceProfile } from "@/hooks/usePerformanceProfile";
 
 const tools = [
   {
-    title: "Ads Campaign Strategy Generator",
-    description: "Generate a full campaign strategy in 60 seconds using AI",
+    title: "Campaign Strategy Assessment",
+    description: "Self-serve preview: stress-test your campaign thinking before a strategy call",
     status: "live" as const,
     url: "/tools/ads-campaign",
   },
   {
-    title: "ROAS Calculator AI",
-    description: "Get instant insights on ad spend and maximizing ROAS recommendations",
+    title: "Spend & Efficiency Check",
+    description: "Quick diagnostic on ad spend patterns — a taste of how we analyze funnels",
     status: "live" as const,
     url: "/tools/roas-calculator",
   },
   {
-    title: "Ads Doctor AI",
-    description: "Upload Your Ads dashboard Screenshot. Get Exact Actions in Seconds.",
+    title: "Ads Health Snapshot",
+    description: "Upload a dashboard screenshot for instant improvement angles — free to try",
     status: "live" as const,
     url: "/tools/ads-doctor",
   },
@@ -35,6 +36,7 @@ const toolBentoItems: BentoCardProps[] = tools.map((tool) => ({
 const Tools = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
+  const { isMobile, enableHeavyEffects } = usePerformanceProfile();
 
   return (
     <section id="tools" className="py-10 md:py-28">
@@ -46,7 +48,7 @@ const Tools = () => {
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            Free Tools
+            Free Assessments
           </motion.p>
           <motion.h2
             className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4 text-balance"
@@ -54,7 +56,7 @@ const Tools = () => {
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Agency-Built AI Tools. Free to Use.
+            Try Before You Book
           </motion.h2>
           <motion.p
             className="text-muted-foreground"
@@ -62,7 +64,7 @@ const Tools = () => {
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            We build internal AI tools and share them with the world. A taste of what we deploy for clients.
+            Self-serve tools that show how we think about AI in your stack — a preview of the clarity you get on a discovery call.
           </motion.p>
         </div>
 
@@ -70,16 +72,14 @@ const Tools = () => {
           items={toolBentoItems}
           layout="even"
           textAutoHide={true}
-          enableStars
-          enableSpotlight
+          enableStars={enableHeavyEffects && !isMobile}
+          enableSpotlight={enableHeavyEffects && !isMobile}
           enableBorderGlow={true}
           enableTilt={false}
           enableMagnetism={false}
-          clickEffect
-          spotlightRadius={400}
-          particleCount={12}
-          glowColor="132, 0, 255"
-          disableAnimations={false}
+          clickEffect={enableHeavyEffects}
+          spotlightRadius={280}
+          particleCount={6}
         />
       </div>
     </section>

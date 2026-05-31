@@ -49,6 +49,14 @@ const SplitText: React.FC<SplitTextProps> = ({
   const animationCompletedRef = useRef(false);
   const onCompleteRef = useRef(onLetterAnimationComplete);
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [skipAnimation, setSkipAnimation] = useState(false);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mobile = window.matchMedia("(max-width: 767px)").matches;
+    const lowEnd = (navigator.hardwareConcurrency ?? 8) <= 4;
+    setSkipAnimation(reduced || mobile || lowEnd);
+  }, []);
 
   useEffect(() => {
     onCompleteRef.current = onLetterAnimationComplete;
@@ -71,7 +79,7 @@ const SplitText: React.FC<SplitTextProps> = ({
 
   useGSAP(
     () => {
-      if (!ref.current || !text || !fontsLoaded) return;
+      if (!ref.current || !text || !fontsLoaded || skipAnimation) return;
       if (animationCompletedRef.current) return;
 
       const el = ref.current as HTMLElement & {
@@ -169,6 +177,7 @@ const SplitText: React.FC<SplitTextProps> = ({
         threshold,
         rootMargin,
         fontsLoaded,
+        skipAnimation,
       ],
       scope: ref,
     },
@@ -179,8 +188,16 @@ const SplitText: React.FC<SplitTextProps> = ({
   const style: React.CSSProperties = {
     textAlign,
     wordWrap: "break-word",
-    willChange: "transform, opacity",
+    ...(skipAnimation ? {} : { willChange: "transform, opacity" }),
   };
+
+  if (skipAnimation) {
+    return (
+      <Tag ref={ref as never} style={style} className={`split-parent whitespace-normal ${className}`}>
+        {text}
+      </Tag>
+    );
+  }
 
   return (
     <Tag

@@ -45,7 +45,7 @@ export const HoverBorderGradient = React.forwardRef<HTMLElement, HoverBorderGrad
           // Outer wrapper — provides the glowing border via box-shadow + border
           "relative inline-flex rounded-[inherit] p-px w-fit h-fit",
           "border border-primary/30 hover:border-primary/70",
-          "shadow-[0_0_0_0_hsla(259,95%,65%,0)] hover:shadow-[0_0_16px_2px_hsla(259,95%,65%,0.25)]",
+          "shadow-[0_0_0_0_hsl(0 0% 100% /0)] hover:shadow-[0_0_16px_2px_hsl(0 0% 100% /0.25)]",
           "transition-all duration-300 ease-out",
           disabled && "pointer-events-none opacity-50",
           containerClassName,

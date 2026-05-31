@@ -1,32 +1,31 @@
-import { lazy, Suspense, useEffect, useState } from "react";
-import { ArrowRight, Zap, Brain, TrendingUp } from "lucide-react";
+import { lazy, Suspense } from "react";
+import { ArrowRight, Brain, TrendingUp, Search } from "lucide-react";
+import { consultingCopy } from "@/content/consultingCopy";
+import { usePerformanceProfile } from "@/hooks/usePerformanceProfile";
+import { useVisibilityPause } from "@/hooks/useVisibilityPause";
+import { heroPillarColors } from "@/theme/consulting-palette";
 
 const LightPillar = lazy(() => import("./LightPillar"));
-const SplitText   = lazy(() => import("@/components/SplitText"));
+const SplitText = lazy(() => import("@/components/SplitText"));
 
-const heroPillarFallback = (
-  <div
-    className="absolute inset-0 w-full h-full bg-background"
-    style={{
-      backgroundImage: `
-        radial-gradient(ellipse 80% 50% at 50% -15%, hsla(259,95%,65%,0.32), transparent 55%),
-        radial-gradient(ellipse 55% 45% at 85% 12%, hsla(311,95%,76%,0.18), transparent 58%)
-      `,
-    }}
-    aria-hidden
-  />
+/** CSS fallback — same gold blur as WebGL pillar (mobile / reduced motion) */
+const HeroPillarBackdrop = () => (
+  <>
+    <div className="hero-pillar-glow" aria-hidden />
+    <div className="hero-pillar-glow-sharp" aria-hidden />
+  </>
 );
 
 /* ─────────────────────────────────────────
    Shared terminal data
 ───────────────────────────────────────── */
 const NODES = [
-  { id: "input",  label: "Lead Signal",  icon: TrendingUp, x: 10, y: 20, delay: 0    },
-  { id: "brain",  label: "AI Engine",    icon: Brain,      x: 42, y: 8,  delay: 0.15 },
-  { id: "zap",    label: "Auto-Execute", icon: Zap,        x: 74, y: 20, delay: 0.3  },
-  { id: "meta",   label: "Meta Ads",     icon: null,       x: 10, y: 62, delay: 0.45 },
-  { id: "crm",    label: "CRM Sync",     icon: null,       x: 42, y: 72, delay: 0.6  },
-  { id: "report", label: "Live Report",  icon: null,       x: 74, y: 62, delay: 0.75 },
+  { id: "input",  label: "Business Ops", icon: TrendingUp, x: 10, y: 20, delay: 0    },
+  { id: "brain",  label: "AI Audit",     icon: Search,     x: 42, y: 8,  delay: 0.15 },
+  { id: "zap",    label: "Roadmap",      icon: Brain,      x: 74, y: 20, delay: 0.3  },
+  { id: "meta",   label: "Sales",        icon: null,       x: 10, y: 62, delay: 0.45 },
+  { id: "crm",    label: "Marketing",    icon: null,       x: 42, y: 72, delay: 0.6  },
+  { id: "report", label: "Team & Data",  icon: null,       x: 74, y: 62, delay: 0.75 },
 ];
 
 const EDGES = [
@@ -39,9 +38,6 @@ const EDGES = [
   { x1: 46, y1: 74, x2: 72, y2: 68 },
 ];
 
-/* ─────────────────────────────────────────
-   Shared terminal canvas (height + icon size configurable)
-───────────────────────────────────────── */
 interface TerminalVisualProps {
   canvasHeight?: number;
   iconSize?: number;
@@ -63,19 +59,17 @@ const TerminalVisual = ({
   const gfId = `gf-${gradientIdSuffix}`;
 
   return (
-    <div className="relative rounded-2xl border border-border/60 bg-card/40 backdrop-blur-md shadow-[0_0_60px_hsla(259,95%,65%,0.12)] overflow-hidden">
-      {/* Traffic lights bar */}
+    <div className="relative rounded-lg border border-gold/30 bg-card/80 backdrop-blur-sm overflow-hidden ai-interface-frame">
+      <div className="ai-scanline pointer-events-none" aria-hidden />
       <div className="flex items-center gap-2 px-4 py-3 border-b border-border/40 bg-card/60">
         <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
-        <div className="w-2.5 h-2.5 rounded-full bg-primary/40" />
-        <div className="w-2.5 h-2.5 rounded-full bg-primary/70" />
-        <span className="ml-auto text-xs text-muted-foreground font-mono-data">ai-automation.engine</span>
-        <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+        <div className="w-2.5 h-2.5 rounded-full bg-gold/50" />
+        <div className="w-2.5 h-2.5 rounded-full bg-gold" />
+        <span className="ml-auto text-xs text-muted-foreground font-mono-data">ai-consulting.engine</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
       </div>
 
-      {/* Node canvas */}
       <div className="relative" style={{ height: canvasHeight }}>
-        {/* SVG edges */}
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 100 100"
@@ -84,9 +78,9 @@ const TerminalVisual = ({
         >
           <defs>
             <linearGradient id={egId} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%"   stopColor="hsla(259,95%,65%,0)" />
-              <stop offset="50%"  stopColor="hsla(259,95%,65%,0.65)" />
-              <stop offset="100%" stopColor="hsla(311,95%,76%,0)" />
+              <stop offset="0%" stopColor="hsl(38 62% 55% / 0)" />
+              <stop offset="50%" stopColor="hsl(40 72% 72% / 0.7)" />
+              <stop offset="100%" stopColor="hsl(38 62% 55% / 0)" />
             </linearGradient>
             <filter id={gfId} x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="0.6" result="b" />
@@ -110,7 +104,6 @@ const TerminalVisual = ({
           ))}
         </svg>
 
-        {/* Nodes */}
         {NODES.map((n) => {
           const Icon = n.icon;
           return (
@@ -121,11 +114,11 @@ const TerminalVisual = ({
             >
               <div className="flex flex-col items-center gap-1">
                 <div
-                  className={`${nodeBoxSize} rounded-xl flex items-center justify-center border border-primary/30 bg-card/80 backdrop-blur-sm shadow-[0_0_18px_hsla(259,95%,65%,0.3)] ${Icon ? "ring-1 ring-primary/20" : ""}`}
+                  className={`${nodeBoxSize} rounded-lg flex items-center justify-center border border-gold/25 bg-secondary/90 ${Icon ? "ring-1 ring-gold/15" : ""}`}
                 >
                   {Icon
-                    ? <Icon size={iconSize} className="text-primary" />
-                    : <span className="w-1.5 h-1.5 rounded-full bg-primary/70 animate-pulse" />
+                    ? <Icon size={iconSize} className="text-gold-light" />
+                    : <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
                   }
                 </div>
                 <span className={`${labelClass} font-mono-data text-muted-foreground whitespace-nowrap`}>
@@ -136,58 +129,61 @@ const TerminalVisual = ({
           );
         })}
 
-        {/* Travelling data packets */}
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className={`absolute ${packetSize} rounded-full bg-primary hero-packet`}
+            className={`absolute ${packetSize} rounded-full hero-packet`}
             style={{ animationDelay: `${i * 1.2}s` }}
           />
         ))}
       </div>
 
-      {/* Status bar */}
       <div className="px-4 py-2.5 border-t border-border/30 bg-card/60 flex items-center gap-3">
-        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0" />
+        <span className="w-1.5 h-1.5 rounded-full bg-metric shrink-0" />
         <span className="text-[10px] font-mono-data text-muted-foreground">
-          3 automations running · 12 leads processed · ROAS 4.1x
+          audit complete · 12 opportunities mapped · roadmap delivered
         </span>
       </div>
     </div>
   );
 };
 
-/* ── Ticker ── */
 const TICKER = [
-  "AI Automation", "Meta Ads", "LinkedIn", "CRM Sync",
-  "AI Content", "Lead Nurturing", "ROAS Boost", "AI Chatbots",
+  "Ops & Workflows", "Sales & CRM", "Marketing Funnels", "Team & HR",
+  "Data & Reporting", "AI Roadmaps", "Discovery Calls", "On-Demand Advice",
 ];
 
-/* ── Hero ── */
 const Hero = () => {
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduceMotion(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
+  const profile = usePerformanceProfile();
+  const { ref: heroRef, isActive: heroVisible } = useVisibilityPause<HTMLElement>();
+  const useStaticPillar = profile.prefersReducedMotion || profile.isMobile;
+  const pillarQuality = profile.isLowEnd ? "low" : "medium";
 
   return (
-    <section className="relative w-full overflow-hidden bg-background pt-24 pb-12 sm:pt-32 md:pt-44 md:pb-28">
-
-      {/* Background pillar */}
+    <section
+      ref={heroRef}
+      className={`relative w-full overflow-hidden bg-background pt-28 pb-12 sm:pt-36 md:pt-48 md:pb-28 ${!profile.enableHeavyEffects ? "anim-paused" : ""}`}
+    >
+      {/* Gold light blur — WebGL pillar on desktop, CSS blur on mobile */}
       <div className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }}>
-        {reduceMotion ? heroPillarFallback : (
-          <Suspense fallback={heroPillarFallback}>
+        {useStaticPillar ? (
+          <HeroPillarBackdrop />
+        ) : (
+          <Suspense fallback={<HeroPillarBackdrop />}>
             <LightPillar
-              topColor="#5227FF" bottomColor="#FF9FFC"
-              intensity={1} rotationSpeed={0.3} glowAmount={0.002}
-              pillarWidth={3} pillarHeight={0.4} noiseIntensity={0.5}
-              pillarRotation={25} interactive={false}
-              mixBlendMode="screen" quality="high"
+              topColor={heroPillarColors.topColor}
+              bottomColor={heroPillarColors.bottomColor}
+              intensity={1}
+              rotationSpeed={0.3}
+              glowAmount={0.002}
+              pillarWidth={3}
+              pillarHeight={0.4}
+              noiseIntensity={0.45}
+              pillarRotation={25}
+              interactive={false}
+              mixBlendMode="screen"
+              quality={pillarQuality}
+              paused={!heroVisible}
             />
           </Suspense>
         )}
@@ -195,72 +191,68 @@ const Hero = () => {
       <div className="absolute inset-0 hero-grid-overlay pointer-events-none" aria-hidden />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* ── Badge ── */}
-        <div className="mb-4 sm:mb-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-sm">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shrink-0" />
-          <span className="text-[10px] font-mono-data text-primary tracking-widest uppercase">
-            AI-Powered Marketing Agency
+        <div className="mb-4 sm:mb-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold/25 bg-gold-subtle">
+          <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
+          <span className="text-[10px] font-mono-data text-gold-light tracking-[0.18em] uppercase">
+            {consultingCopy.badge}
           </span>
         </div>
 
-        {/* ── Two-col grid on lg+, single col on mobile ── */}
         <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center">
-
-          {/* ── Copy — left aligned ── */}
           <div className="w-full">
-
-            {/* H1 with SplitText — bigger on mobile so it wraps 2–3 lines */}
-            <Suspense fallback={
+            {profile.enableHeavyEffects ? (
+              <Suspense fallback={
+                <h1 className="font-display font-bold text-foreground leading-[1.1] mb-4 text-[2.15rem] sm:text-[2.6rem] md:text-5xl lg:text-[3.8rem] xl:text-[4.5rem]">
+                  {consultingCopy.headline}
+                </h1>
+              }>
+                <SplitText
+                  tag="h1"
+                  text={consultingCopy.headline}
+                  className="font-display font-bold text-foreground leading-[1.1] mb-4 text-[2.15rem] sm:text-[2.6rem] md:text-5xl lg:text-[3.8rem] xl:text-[4.5rem]"
+                  delay={35}
+                  duration={0.9}
+                  splitType="words"
+                  rootMargin="0px"
+                  threshold={0.01}
+                  textAlign="left"
+                  from={{ opacity: 0, y: 20 }}
+                  to={{ opacity: 1, y: 0 }}
+                />
+              </Suspense>
+            ) : (
               <h1 className="font-display font-bold text-foreground leading-[1.1] mb-4 text-[2.15rem] sm:text-[2.6rem] md:text-5xl lg:text-[3.8rem] xl:text-[4.5rem]">
-                We Automate Your Growth with AI.
+                {consultingCopy.headline}
               </h1>
-            }>
-              <SplitText
-                tag="h1"
-                text="We Automate Your Growth with AI."
-                className="font-display font-bold text-foreground leading-[1.1] mb-4 text-[2.15rem] sm:text-[2.6rem] md:text-5xl lg:text-[3.8rem] xl:text-[4.5rem]"
-                delay={35}
-                duration={0.9}
-                splitType="chars"
-                rootMargin="0px"
-                threshold={0.01}
-                textAlign="left"
-                from={{ opacity: 0, y: 20 }}
-                to={{ opacity: 1, y: 0 }}
-              />
-            </Suspense>
+            )}
 
-            {/* Subtext */}
             <p className="text-muted-foreground leading-relaxed mb-5 text-sm sm:text-base md:text-lg max-w-lg">
-              We embed AI into your marketing systems — automating lead generation, ad campaigns, content, and CRM — so your business scales without scaling headcount.
+              {consultingCopy.subhead}
             </p>
 
-            {/* Buttons — left-aligned, compact, NOT full-width */}
             <div className="flex flex-row gap-2 sm:gap-3 mb-6 sm:mb-8 flex-wrap">
               <a
                 href="#cta"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl bg-primary text-primary-foreground text-xs sm:text-sm font-semibold border border-primary/40 transition-all hover:-translate-y-px hover:shadow-[0_0_24px_hsla(259,95%,65%,0.45)] active:scale-[0.98] whitespace-nowrap"
+                className="btn-cta gap-1.5 px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg text-xs sm:text-sm whitespace-nowrap"
               >
-                Book a Free AI Audit <ArrowRight size={13} />
+                {consultingCopy.ctaPrimary} <ArrowRight size={13} />
               </a>
               <a
                 href="#services"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-foreground text-xs sm:text-sm font-medium border border-border/50 transition-all hover:border-primary/40 hover:bg-primary/5 whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg text-gold-light text-xs sm:text-sm font-medium border border-gold/35 transition-all hover:border-gold/60 hover:bg-gold-subtle whitespace-nowrap"
               >
-                Explore Services
+                {consultingCopy.ctaSecondary}
               </a>
             </div>
 
-            {/* Ticker — clipped */}
             <div className="flex items-center gap-2 w-full overflow-hidden">
-              <span className="text-[10px] text-muted-foreground font-mono-data shrink-0">WE DO →</span>
+              <span className="text-[10px] text-gold-muted font-mono-data shrink-0">WE MAP →</span>
               <div className="overflow-hidden flex-1 min-w-0">
                 <div className="hero-ticker flex gap-2">
                   {[...TICKER, ...TICKER].map((t, i) => (
                     <span
                       key={i}
-                      className="shrink-0 text-[10px] px-2 py-1 rounded-full border border-border/40 bg-card/40 text-muted-foreground font-mono-data whitespace-nowrap"
+                      className="shrink-0 text-[10px] px-2 py-1 rounded-full border border-gold/20 bg-card/50 text-muted-foreground font-mono-data whitespace-nowrap"
                     >
                       {t}
                     </span>
@@ -270,21 +262,17 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* ── Terminal — desktop only (in grid column) ── */}
           <div className="hidden lg:block w-full relative mt-0">
             <TerminalVisual gradientIdSuffix="d" />
-            {/* Floating chips */}
-            <div className="absolute -top-3 -right-3 px-3 py-1.5 rounded-xl bg-primary/20 border border-primary/40 backdrop-blur-sm shadow-lg">
-              <p className="text-xs font-mono-data text-primary font-medium">↑ 4.1x ROAS</p>
+            <div className="absolute -top-3 -right-3 px-3 py-1.5 rounded-lg border border-gold/30 bg-card/95 backdrop-blur-sm">
+              <p className="text-xs font-mono-data text-gold-light font-medium">AI roadmap delivered</p>
             </div>
-            <div className="absolute -bottom-3 -left-3 px-3 py-1.5 rounded-xl bg-card border border-border/60 backdrop-blur-sm shadow-lg">
-              <p className="text-xs font-mono-data text-muted-foreground">30+ brands automated</p>
+            <div className="absolute -bottom-3 -left-3 px-3 py-1.5 rounded-lg border border-border bg-card/95 backdrop-blur-sm">
+              <p className="text-xs font-mono-data text-muted-foreground">30+ businesses advised</p>
             </div>
           </div>
-
         </div>
 
-        {/* ── Terminal — mobile only (below copy, full width) ── */}
         <div className="lg:hidden w-full relative mt-6">
           <TerminalVisual
             canvasHeight={180}
@@ -294,15 +282,13 @@ const Hero = () => {
             packetSize="w-1 h-1"
             gradientIdSuffix="m"
           />
-          {/* Floating chips — smaller on mobile */}
-          <div className="absolute -top-2.5 -right-2 px-2.5 py-1 rounded-xl bg-primary/20 border border-primary/40 backdrop-blur-sm shadow-lg">
-            <p className="text-[10px] font-mono-data text-primary font-medium">↑ 4.1x ROAS</p>
+          <div className="absolute -top-2.5 -right-2 px-2.5 py-1 rounded-lg border border-gold/30 bg-card/95 backdrop-blur-sm">
+            <p className="text-[10px] font-mono-data text-gold-light font-medium">AI roadmap delivered</p>
           </div>
-          <div className="absolute -bottom-2.5 -left-2 px-2.5 py-1 rounded-xl bg-card border border-border/60 backdrop-blur-sm shadow-lg">
-            <p className="text-[10px] font-mono-data text-muted-foreground">30+ brands automated</p>
+          <div className="absolute -bottom-2.5 -left-2 px-2.5 py-1 rounded-lg border border-border bg-card/95 backdrop-blur-sm">
+            <p className="text-[10px] font-mono-data text-muted-foreground">30+ businesses advised</p>
           </div>
         </div>
-
       </div>
     </section>
   );

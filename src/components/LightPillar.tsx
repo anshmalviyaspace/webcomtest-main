@@ -16,11 +16,13 @@ interface LightPillarProps {
   mixBlendMode?: string;
   pillarRotation?: number;
   quality?: 'low' | 'medium' | 'high';
+  /** When true, stops the render loop to save GPU */
+  paused?: boolean;
 }
 
 const LightPillar = ({
-  topColor = '#5227FF',
-  bottomColor = '#FF9FFC',
+  topColor = '#2a2a2a',
+  bottomColor = '#0a0a0a',
   intensity = 1.0,
   rotationSpeed = 0.3,
   interactive = false,
@@ -31,10 +33,12 @@ const LightPillar = ({
   noiseIntensity = 0.5,
   mixBlendMode = 'screen',
   pillarRotation = 0,
-  quality = 'high'
+  quality = 'high',
+  paused = false,
 }: LightPillarProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
+  const pausedRef = useRef(paused);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const materialRef = useRef<THREE.ShaderMaterial | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -52,6 +56,10 @@ const LightPillar = ({
       setWebGLSupported(false);
     }
   }, []);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
 
   useEffect(() => {
     if (!containerRef.current || !webGLSupported) return;
@@ -259,6 +267,13 @@ const LightPillar = ({
     const frameTime = 1000 / targetFPS;
 
     const animate = (currentTime: number) => {
+      if (pausedRef.current) {
+        rafRef.current = window.setTimeout(() => {
+          rafRef.current = requestAnimationFrame(animate);
+        }, 200) as unknown as number;
+        return;
+      }
+
       if (!materialRef.current || !rendererRef.current || !sceneRef.current || !cameraRef.current) return;
 
       const deltaTime = currentTime - lastTime;
@@ -294,7 +309,10 @@ const LightPillar = ({
     return () => {
       window.removeEventListener('resize', handleResize);
       if (interactive) container.removeEventListener('mousemove', handleMouseMove);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        clearTimeout(rafRef.current as unknown as number);
+      }
       if (rendererRef.current) {
         rendererRef.current.dispose();
         rendererRef.current.forceContextLoss();
@@ -348,8 +366,8 @@ const LightPillar = ({
         style={{
           mixBlendMode: mixBlendMode as CSSProperties["mixBlendMode"],
           backgroundImage: `
-            radial-gradient(ellipse 80% 50% at 50% -15%, hsla(259, 95%, 65%, 0.28), transparent 55%),
-            radial-gradient(ellipse 55% 45% at 85% 12%, hsla(311, 95%, 76%, 0.16), transparent 58%)
+            radial-gradient(ellipse 80% 50% at 50% -15%, hsl(0 0% 100% / 0.28), transparent 55%),
+            radial-gradient(ellipse 55% 45% at 85% 12%, hsl(0 0% 100% / 0.16), transparent 58%)
           `,
         }}
         aria-hidden

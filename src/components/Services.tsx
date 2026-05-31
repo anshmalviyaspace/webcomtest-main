@@ -1,19 +1,40 @@
-import { Bot, BarChart3, PenTool, Workflow, MessageSquareCode, Globe } from "lucide-react";
+import {
+  Bot,
+  BarChart3,
+  PenTool,
+  Workflow,
+  MessageSquareCode,
+  Users,
+  Phone,
+  ClipboardList,
+  MessagesSquare,
+  Globe,
+} from "lucide-react";
 import { ShineBorder } from "@/registry/magicui/shine-border";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import EcosystemMapIllustration from "@/components/illustrations/EcosystemMapIllustration";
+import { usePerformanceProfile } from "@/hooks/usePerformanceProfile";
+import { useVisibilityPause } from "@/hooks/useVisibilityPause";
+import { shineColors } from "@/theme/consulting-palette";
+
+const StaticCardGraphic = () => (
+  <div className="relative h-14 w-full flex items-center justify-center mb-4 px-4" aria-hidden>
+    <div className="h-1.5 w-full max-w-[140px] rounded-full bg-gradient-to-r from-primary/5 via-primary/25 to-primary/5" />
+  </div>
+);
 
 /* ─── Mini visual graphics per card ─── */
 
 /** Animated flow: three nodes connected by pulsing lines */
 const FlowGraphic = () => (
   <div className="relative h-14 w-full flex items-center justify-center gap-3 mb-4" aria-hidden>
-    {["Lead", "AI", "Action"].map((label, i) => (
+    {["Ops", "Map", "Plan"].map((label, i) => (
       <div key={label} className="flex items-center gap-3">
         <div className="flex flex-col items-center gap-1">
           <div
             className="w-8 h-8 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center"
-            style={{ boxShadow: "0 0 10px hsla(259,95%,65%,0.2)" }}
+            style={{ boxShadow: "0 0 10px hsl(0 0% 100% /0.2)" }}
           >
             <span className="text-[9px] font-mono-data text-primary font-bold">{label}</span>
           </div>
@@ -39,8 +60,8 @@ const FlowGraphic = () => (
 const ChatGraphic = () => (
   <div className="relative h-14 w-full flex flex-col gap-1.5 mb-4 px-2" aria-hidden>
     {[
-      { text: "Qualify this lead →", align: "left", delay: 0 },
-      { text: "Done. Booked for 3 PM ✓", align: "right", delay: 0.4 },
+      { text: "Where can AI help? →", align: "left", delay: 0 },
+      { text: "Roadmap ready ✓", align: "right", delay: 0.4 },
     ].map((msg) => (
       <motion.div
         key={msg.text}
@@ -77,7 +98,7 @@ const SyncGraphic = () => (
         />
       ))}
       <div className="w-5 h-5 rounded-full bg-primary/30 border border-primary/60 flex items-center justify-center">
-        <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+        <div className="w-2 h-2 rounded-full bg-gold animate-pulse" />
       </div>
       {/* Orbiting dots */}
       {[0, 120, 240].map((deg, i) => (
@@ -111,15 +132,13 @@ const ChartGraphic = () => {
         <motion.div
           key={i}
           className="flex-1 rounded-sm bg-primary/40"
-          style={{ maxWidth: 14 }}
           initial={{ scaleY: 0 }}
           animate={{ scaleY: [h * 0.6, h, h * 0.8, h] }}
           transition={{ duration: 2, delay: i * 0.1, repeat: Infinity, repeatDelay: 2, ease: "easeInOut" }}
           style={{ height: `${h * 100}%`, transformOrigin: "bottom", maxWidth: 14 }}
         />
       ))}
-      {/* ROAS label */}
-      <div className="absolute top-0 right-4 text-[9px] font-mono-data text-primary">4.1x ↑</div>
+      <div className="absolute top-0 right-4 text-[9px] font-mono-data text-primary">insights ↑</div>
     </div>
   );
 };
@@ -163,7 +182,7 @@ const WebGraphic = () => (
       ))}
       <div
         className="w-11 h-11 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center"
-        style={{ boxShadow: "0 0 16px hsla(259,95%,65%,0.2)" }}
+        style={{ boxShadow: "0 0 16px hsl(0 0% 100% /0.2)" }}
       >
         <Globe size={18} className="text-primary" />
       </div>
@@ -188,51 +207,72 @@ const WebGraphic = () => (
 
 const GRAPHICS = [FlowGraphic, ChatGraphic, SyncGraphic, ChartGraphic, ContentGraphic, WebGraphic];
 
-const aiServices = [
+const consultingDomains = [
   {
-    icon: Bot,
-    tag: "Core AI",
-    title: "AI Workflow Automation",
-    description: "Replace manual steps with intelligent AI agents.",
-    accent: "hsla(259,95%,65%,0.15)",
+    icon: Workflow,
+    tag: "Operations",
+    title: "Operations & Workflows",
+    description: "Manual processes, SOPs, and internal tools — where automation saves the most time.",
+    accent: "hsl(0 0% 100% /0.15)",
   },
   {
     icon: MessageSquareCode,
-    tag: "Core AI",
-    title: "AI Chatbots & Agents",
-    description: "Qualify leads, answer queries, book calls 24/7.",
-    accent: "hsla(311,95%,76%,0.12)",
-  },
-  {
-    icon: Workflow,
-    tag: "Core AI",
-    title: "CRM & Systems Integration",
-    description: "One automated pipeline. No missed follow-ups.",
-    accent: "hsla(259,95%,65%,0.12)",
-  },
-];
-
-const marketingServices = [
-  {
-    icon: BarChart3,
-    tag: "Paid Media",
-    title: "Meta, Google & LinkedIn Ads",
-    description: "AI-optimized campaigns with real-time ROAS tracking.",
-    accent: "hsla(259,95%,65%,0.1)",
+    tag: "Sales",
+    title: "Sales & CRM",
+    description: "Pipeline stages, follow-ups, and lead routing — advisory on AI that supports revenue.",
+    accent: "hsl(0 0% 100% /0.12)",
   },
   {
     icon: PenTool,
-    tag: "Content",
-    title: "AI Content at Scale",
-    description: "10x speed content without losing your brand voice.",
-    accent: "hsla(311,95%,76%,0.1)",
+    tag: "Marketing",
+    title: "Marketing & Funnels",
+    description: "Ads, content, and landing flows — we advise on AI use, not run campaigns for you.",
+    accent: "hsl(0 0% 100% /0.12)",
   },
   {
-    icon: Globe,
-    tag: "Web",
-    title: "Website Creation",
-    description: "High-converting pages built to turn visitors into leads.",
-    accent: "hsla(259,95%,65%,0.1)",
+    icon: Users,
+    tag: "People",
+    title: "Team & HR",
+    description: "Onboarding, training, and internal AI adoption — how your people work with new tools.",
+    accent: "hsl(0 0% 100% /0.1)",
+  },
+  {
+    icon: BarChart3,
+    tag: "Data",
+    title: "Data & Reporting",
+    description: "Dashboards, attribution, and decision data — what to measure before you automate.",
+    accent: "hsl(0 0% 100% /0.1)",
+  },
+  {
+    icon: Bot,
+    tag: "CX",
+    title: "Customer Experience",
+    description: "Support bots, ticketing, and response automation — where AI improves client touchpoints.",
+    accent: "hsl(0 0% 100% /0.1)",
+  },
+];
+
+const engagementTypes = [
+  {
+    icon: Phone,
+    tag: "Intro",
+    title: "Free AI Discovery Call",
+    description: "15-minute intro to understand fit, priorities, and sensible next steps.",
+    accent: "hsl(0 0% 100% /0.15)",
+  },
+  {
+    icon: ClipboardList,
+    tag: "Deep dive",
+    title: "AI Systems Audit Session",
+    description: "Structured call or meeting with a documented opportunity map for your stack.",
+    accent: "hsl(0 0% 100% /0.12)",
+  },
+  {
+    icon: MessagesSquare,
+    tag: "Flexible",
+    title: "On-Demand Consulting",
+    description: "Async or scheduled check-ins as you implement — clarity when you need it.",
+    accent: "hsl(0 0% 100% /0.12)",
   },
 ];
 
@@ -243,6 +283,9 @@ const ServiceCard = ({
   description,
   accent,
   index,
+  reveal,
+  liveGraphics,
+  shineEnabled,
 }: {
   icon: React.ElementType;
   tag: string;
@@ -250,18 +293,21 @@ const ServiceCard = ({
   description: string;
   accent: string;
   index: number;
+  reveal: boolean;
+  liveGraphics: boolean;
+  shineEnabled: boolean;
 }) => {
-  const Graphic = GRAPHICS[index];
+  const Graphic = GRAPHICS[index % GRAPHICS.length];
   return (
     <motion.div
-      className="group relative overflow-hidden rounded-2xl border border-white/5 bg-card/60 p-5 sm:p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_40px_hsla(259,95%,65%,0.08)]"
+      className="group relative overflow-hidden rounded-2xl border border-white/5 bg-card/60 p-5 sm:p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_40px_hsl(0 0% 100% /0.08)]"
       initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
+      animate={reveal ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
     >
       <ShineBorder
-        shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+        enabled={shineEnabled}
+        shineColor={shineColors}
         borderWidth={1}
         duration={16}
         className="z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -273,7 +319,7 @@ const ServiceCard = ({
       />
       <div className="relative z-10">
         {/* Mini visual */}
-        <Graphic />
+        {liveGraphics ? <Graphic /> : <StaticCardGraphic />}
 
         <div className="flex items-start justify-between mb-3">
           <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 group-hover:border-primary/40 transition-all duration-300 shrink-0">
@@ -294,89 +340,115 @@ const ServiceCard = ({
 
 const Services = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const gridInView = useInView(gridRef, { once: true, margin: "-60px" });
+  const { enableHeavyEffects } = usePerformanceProfile();
+  const { ref: sectionRef, isActive: sectionActive } = useVisibilityPause<HTMLElement>();
+  const liveGraphics = enableHeavyEffects && sectionActive;
+  const cardProps = {
+    reveal: gridInView,
+    liveGraphics,
+    shineEnabled: enableHeavyEffects,
+  };
 
   return (
-    <section id="services" className="py-14 md:py-28 lg:py-32 relative overflow-hidden">
+    <section ref={sectionRef} id="services" className="py-14 md:py-28 lg:py-32 relative overflow-hidden">
       <div
         className="pointer-events-none absolute inset-0 opacity-40"
         aria-hidden
         style={{
-          background: "radial-gradient(ellipse 60% 50% at 50% 100%, hsla(259,95%,65%,0.08), transparent 70%)",
+          background: "radial-gradient(ellipse 60% 50% at 50% 100%, hsl(0 0% 100% /0.08), transparent 70%)",
         }}
       />
 
       <div className="container px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
-        <div ref={ref} className="max-w-2xl mb-10 sm:mb-14 md:mb-20">
-          <motion.p
-            className="text-xs font-mono-data tracking-widest text-primary uppercase mb-3 sm:mb-4"
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
+        {/* Header + ecosystem illustration */}
+        <div ref={ref} className="grid lg:grid-cols-[1fr_min(42%,320px)] gap-10 lg:gap-14 items-center mb-10 sm:mb-14 md:mb-20">
+          <div className="max-w-2xl">
+            <motion.p
+              className="section-eyebrow mb-3 sm:mb-4"
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+            >
+              What We Consult On
+            </motion.p>
+            <motion.h2
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground text-balance mb-4 sm:mb-5 leading-[1.1]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              Clarity before code. Strategy before spend.
+            </motion.h2>
+            <motion.p
+              className="text-muted-foreground text-base sm:text-lg leading-relaxed"
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              We analyze your business end to end — then show you where AI creates real leverage.
+            </motion.p>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="w-full max-w-[280px] sm:max-w-sm mx-auto lg:max-w-none"
           >
-            What We Build
-          </motion.p>
-          <motion.h2
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground text-balance mb-4 sm:mb-5 leading-[1.1]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            AI-first systems that run your marketing on autopilot.
-          </motion.h2>
-          <motion.p
-            className="text-muted-foreground text-base sm:text-lg leading-relaxed"
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Two layers. One outcome: growth without the grind.
-          </motion.p>
+            <EcosystemMapIllustration />
+          </motion.div>
         </div>
 
-        {/* AI Core */}
-        <div className="mb-10 sm:mb-14">
+        {/* Consulting domains */}
+        <div ref={gridRef} className="mb-10 sm:mb-14">
           <motion.div
             className="flex items-center gap-2 sm:gap-3 mb-5 sm:mb-6"
             initial={{ opacity: 0, x: -16 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={gridInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
             <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-primary/10 border border-primary/20 shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="text-[10px] sm:text-xs font-mono-data text-primary tracking-widest uppercase">Layer 01 — AI Core</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+              <span className="text-[10px] sm:text-xs font-mono-data text-primary tracking-widest uppercase">Layer 01 — Consulting Domains</span>
             </div>
             <div className="flex-1 h-px bg-gradient-to-r from-primary/30 to-transparent" />
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {aiServices.map((s, i) => (
-              <ServiceCard key={s.title} {...s} index={i} />
+            {consultingDomains.map((s, i) => (
+              <ServiceCard key={s.title} {...s} index={i} {...cardProps} />
             ))}
           </div>
         </div>
 
-        {/* Marketing Execution */}
+        {/* How we engage */}
         <div>
           <motion.div
             className="flex items-center gap-2 sm:gap-3 mb-5 sm:mb-6"
             initial={{ opacity: 0, x: -16 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={gridInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
             <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-card/80 border border-white/5 shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground" />
-              <span className="text-[10px] sm:text-xs font-mono-data text-muted-foreground tracking-widest uppercase">Layer 02 — Marketing Execution</span>
+              <span className="text-[10px] sm:text-xs font-mono-data text-muted-foreground tracking-widest uppercase">Layer 02 — How We Engage</span>
             </div>
             <div className="flex-1 h-px bg-gradient-to-r from-border/60 to-transparent" />
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {marketingServices.map((s, i) => (
-              <ServiceCard key={s.title} {...s} index={i + 3} />
+            {engagementTypes.map((s, i) => (
+              <ServiceCard key={s.title} {...s} index={i} {...cardProps} />
             ))}
           </div>
+          <motion.p
+            className="mt-8 text-sm text-muted-foreground text-center max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={gridInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Implementation and builds are offered selectively — not full-service agency retainers.
+          </motion.p>
         </div>
       </div>
     </section>

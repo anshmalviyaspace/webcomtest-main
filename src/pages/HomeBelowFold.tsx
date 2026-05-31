@@ -1,7 +1,9 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import MetricBar from "@/components/MetricBar";
+import HowWeWorkShowcase from "@/components/HowWeWorkShowcase";
 import Philosophy from "@/components/Philosophy";
 import Services from "@/components/Services";
+import DeliverablesShowcase from "@/components/DeliverablesShowcase";
 import OrbSection from "@/components/OrbSection";
 import GlowDivider from "@/components/GlowDivider";
 import TrustLogos from "@/components/TrustLogos";
@@ -10,6 +12,7 @@ import Values from "@/components/Values";
 import Founder from "@/components/founder";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import PerfSection from "@/components/PerfSection";
 
 const Tools = lazy(() => import("@/components/Tools"));
 
@@ -65,25 +68,50 @@ function DeferredTools() {
 const HomeBelowFold = () => {
   return (
     <>
-      <MetricBar />
+      <PerfSection>
+        <MetricBar />
+      </PerfSection>
       <GlowDivider />
-      <Philosophy />
+      <PerfSection>
+        <HowWeWorkShowcase />
+      </PerfSection>
       <GlowDivider />
-      <Services />
+      <PerfSection>
+        <Philosophy />
+      </PerfSection>
       <GlowDivider />
-      <OrbSection />
+      <PerfSection>
+        <Services />
+        <DeliverablesShowcase />
+      </PerfSection>
       <GlowDivider />
-      <DeferredTools />
+      <PerfSection>
+        <OrbSection />
+      </PerfSection>
       <GlowDivider />
-      <TrustLogos />
+      <PerfSection>
+        <DeferredTools />
+      </PerfSection>
       <GlowDivider />
-      <Clients />
+      <PerfSection>
+        <TrustLogos />
+      </PerfSection>
       <GlowDivider />
-      <Values />
+      <PerfSection>
+        <Clients />
+      </PerfSection>
       <GlowDivider />
-      <Founder />
+      <PerfSection>
+        <Values />
+      </PerfSection>
       <GlowDivider />
-      <CTA />
+      <PerfSection>
+        <Founder />
+      </PerfSection>
+      <GlowDivider />
+      <PerfSection>
+        <CTA />
+      </PerfSection>
       <Footer />
     </>
   );

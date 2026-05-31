@@ -540,7 +540,10 @@ const GlobalSpotlight: React.FC<{
     document.body.appendChild(spotlight);
     spotlightRef.current = spotlight;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    let moveRaf: number | null = null;
+    let lastMove: MouseEvent | null = null;
+
+    const processMouseMove = (e: MouseEvent) => {
       if (!spotlightRef.current || !gridRef.current) return;
 
       const section = gridRef.current.closest(".bento-section");
@@ -607,6 +610,15 @@ const GlobalSpotlight: React.FC<{
       });
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      lastMove = e;
+      if (moveRaf !== null) return;
+      moveRaf = requestAnimationFrame(() => {
+        moveRaf = null;
+        if (lastMove) processMouseMove(lastMove);
+      });
+    };
+
     const handleMouseLeave = () => {
       gridRef.current?.querySelectorAll(".card").forEach((card) => {
         (card as HTMLElement).style.setProperty("--glow-intensity", "0");
@@ -624,6 +636,7 @@ const GlobalSpotlight: React.FC<{
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
+      if (moveRaf !== null) cancelAnimationFrame(moveRaf);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
       spotlightRef.current?.parentNode?.removeChild(spotlightRef.current);

@@ -1,4 +1,6 @@
 import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
+import { usePerformanceProfile } from "@/hooks/usePerformanceProfile";
+import { useVisibilityPause } from "@/hooks/useVisibilityPause";
 import logoConcepz from "@/assets/trust/logo-concepz.png";
 import logoMg from "@/assets/trust/logo-mg.png";
 import logoKravic from "@/assets/trust/logo-kravic.png";
@@ -25,8 +27,12 @@ const loopLogos: LogoItem[] = trustBrands.map((b) => ({
 }));
 
 const TrustLogos = () => {
+  const { isMobile } = usePerformanceProfile();
+  const { ref, isActive } = useVisibilityPause<HTMLElement>();
+
   return (
     <section
+      ref={ref}
       className="relative py-12 md:py-20 overflow-hidden border-y border-border/40"
       aria-labelledby="trust-logos-heading"
     >
@@ -35,7 +41,7 @@ const TrustLogos = () => {
         aria-hidden
         style={{
           background:
-            "radial-gradient(ellipse 70% 45% at 50% -20%, hsla(259, 95%, 65%, 0.18), transparent 55%), radial-gradient(ellipse 50% 40% at 85% 30%, hsla(311, 95%, 76%, 0.1), transparent 60%)",
+            "radial-gradient(ellipse 70% 45% at 50% -20%, hsl(0 0% 100% / 0.18), transparent 55%), radial-gradient(ellipse 50% 40% at 85% 30%, hsl(0 0% 100% / 0.1), transparent 60%)",
         }}
       />
       <div className="container relative z-10 px-4 sm:px-6 lg:px-8">
@@ -54,14 +60,15 @@ const TrustLogos = () => {
         <div className="py-6 md:py-8 overflow-hidden">
           <LogoLoop
             logos={loopLogos}
-            speed={42}
+            speed={isMobile ? 28 : 42}
+            paused={!isActive}
             direction="left"
             logoHeight={44}
             gap={20}
             hoverSpeed={0}
             scaleOnHover={false}
             fadeOut
-            fadeOutColor="hsl(262 38% 5%)"
+            fadeOutColor="hsl(0 0% 4%)"
             ariaLabel="Companies that trust WebCom Media"
             className="w-full"
             renderItem={(item) => {
@@ -75,14 +82,14 @@ const TrustLogos = () => {
                     shadow-[inset_0_1px_0_hsl(0_0%_100%_/_0.04),0_14px_32px_rgba(0,0,0,0.3)]
                     transition-all duration-300
                     hover:border-primary/20
-                    hover:shadow-[inset_0_1px_0_hsl(0_0%_100%_/_0.06),0_18px_40px_hsla(259,95%,65%,0.08)]
+                    hover:shadow-[inset_0_1px_0_hsl(0_0%_100%_/_0.06),0_18px_40px_hsl(0 0% 100% /0.08)]
                   "
                 >
                   <div
                     className="pointer-events-none absolute inset-0 rounded-2xl opacity-70 transition-opacity group-hover/card:opacity-100"
                     style={{
                       background:
-                        "radial-gradient(ellipse 85% 70% at 50% 0%, hsla(259, 95%, 65%, 0.14), transparent 65%)",
+                        "radial-gradient(ellipse 85% 70% at 50% 0%, hsl(0 0% 100% / 0.14), transparent 65%)",
                     }}
                     aria-hidden
                   />
@@ -90,7 +97,7 @@ const TrustLogos = () => {
                     src={item.src}
                     alt={item.alt ?? ""}
                     title={item.title}
-                    className={`relative z-10 h-9 w-auto max-w-[6.5rem] object-contain object-center drop-shadow-[0_0_16px_hsla(259,95%,65%,0.12)] sm:h-10 ${meta?.imgClass ?? ""}`}
+                    className={`relative z-10 h-9 w-auto max-w-[6.5rem] object-contain object-center drop-shadow-[0_0_16px_hsl(0 0% 100% /0.12)] sm:h-10 ${meta?.imgClass ?? ""}`}
                     loading="lazy"
                     decoding="async"
                     draggable={false}

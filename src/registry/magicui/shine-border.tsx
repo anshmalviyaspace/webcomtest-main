@@ -3,6 +3,8 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface ShineBorderProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** When false, skips the animated border (saves GPU on low-end devices) */
+  enabled?: boolean;
   /**
    * Width of the border in pixels
    * @default 1
@@ -29,10 +31,13 @@ export function ShineBorder({
   borderWidth = 1,
   duration = 14,
   shineColor = "#000000",
+  enabled = true,
   className,
   style,
   ...props
 }: ShineBorderProps) {
+  if (!enabled) return null;
+
   return (
     <div
       style={

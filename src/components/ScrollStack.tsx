@@ -325,7 +325,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
   const outerClass = useWindowScroll
     ? `relative w-full ${className}`.trim()
-    : `relative w-full h-full min-h-0 overflow-y-auto overflow-x-visible [scrollbar-width:thin] [scrollbar-color:hsla(259,32%,28%,0.55)_transparent] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border/35 [&::-webkit-scrollbar-thumb]:hover:bg-border/55 ${className}`.trim();
+    : `relative w-full h-full min-h-0 overflow-y-auto overflow-x-visible [scrollbar-width:thin] [scrollbar-color:hsl(0_0%_22%)_transparent] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border/35 [&::-webkit-scrollbar-thumb]:hover:bg-border/55 ${className}`.trim();
 
   return (
     <div

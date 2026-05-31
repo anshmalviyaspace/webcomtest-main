@@ -26,6 +26,8 @@ export interface LogoLoopProps {
   logoHeight?: number;
   gap?: number;
   pauseOnHover?: boolean;
+  /** Stop the rAF loop (e.g. when section is off-screen) */
+  paused?: boolean;
   hoverSpeed?: number;
   fadeOut?: boolean;
   fadeOutColor?: string;
@@ -122,8 +124,11 @@ const useAnimationLoop = (
   seqHeight: number,
   isHovered: boolean,
   hoverSpeed: number | undefined,
-  isVertical: boolean
+  isVertical: boolean,
+  paused: boolean
 ) => {
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
   const rafRef = useRef<number | null>(null);
   const lastTimestampRef = useRef<number | null>(null);
   const offsetRef = useRef(0);
@@ -156,6 +161,13 @@ const useAnimationLoop = (
     }
 
     const animate = (timestamp: number) => {
+      if (pausedRef.current) {
+        rafRef.current = window.setTimeout(() => {
+          rafRef.current = requestAnimationFrame(animate);
+        }, 200) as unknown as number;
+        return;
+      }
+
       if (lastTimestampRef.current === null) {
         lastTimestampRef.current = timestamp;
       }
@@ -190,8 +202,11 @@ const useAnimationLoop = (
         rafRef.current = null;
       }
       lastTimestampRef.current = null;
+      if (rafRef.current !== null) {
+        clearTimeout(rafRef.current as unknown as number);
+      }
     };
-  }, [targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical]);
+  }, [targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical, paused]);
 };
 
 export const LogoLoop = React.memo<LogoLoopProps>(
@@ -203,6 +218,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
     logoHeight = 28,
     gap = 32,
     pauseOnHover,
+    paused = false,
     hoverSpeed,
     fadeOut = false,
     fadeOutColor,
@@ -271,7 +287,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
 
     useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight, isVertical]);
 
-    useAnimationLoop(trackRef, targetVelocity, seqWidth, seqHeight, isHovered, effectiveHoverSpeed, isVertical);
+    useAnimationLoop(trackRef, targetVelocity, seqWidth, seqHeight, isHovered, effectiveHoverSpeed, isVertical, paused);
 
     const cssVariables = useMemo(
       () =>

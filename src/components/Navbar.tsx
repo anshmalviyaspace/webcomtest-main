@@ -55,7 +55,7 @@ const Navbar = () => {
             as="a"
             href="#cta"
             containerClassName="rounded-lg"
-            innerClassName="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:-translate-y-px hover:shadow-[0_0_20px_hsla(259,95%,65%,0.4)] active:scale-[0.98]"
+            innerClassName="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:-translate-y-px hover:shadow-[0_0_20px_hsl(0 0% 100% /0.4)] active:scale-[0.98]"
           >
             Book an AI Audit
           </HoverBorderGradient>

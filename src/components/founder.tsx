@@ -2,11 +2,11 @@ import { Mail, ArrowRight } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import CountUp from "@/components/CountUp";
-
+import { consultingCopy } from "@/content/consultingCopy";
 const stats = [
-  { value: 30, suffix: "+", label: "Brands Scaled" },
-  { value: 50, prefix: "₹", suffix: "L+", label: "Ad Spend Managed" },
-  { value: 4.1, suffix: "x", label: "Avg. ROAS" },
+  { value: 30, suffix: "+", label: "Businesses Advised" },
+  { value: 50, suffix: "+", label: "Opportunities Mapped" },
+  { value: 6, suffix: "", label: "Domains Reviewed" },
 ];
 
 const Founder = () => {
@@ -14,14 +14,14 @@ const Founder = () => {
   const cardInView = useInView(cardRef, { once: true, margin: "-80px" });
 
   return (
-    <section className="relative py-16 md:py-28 overflow-hidden">
+    <section id="founder" className="relative py-16 md:py-28 overflow-hidden">
       {/* Atmospheric background glow */}
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 80% 50%, hsla(259,95%,65%,0.1) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 20% 50%, hsla(311,95%,76%,0.06), transparent 60%)",
+            "radial-gradient(ellipse 70% 60% at 80% 50%, hsl(0 0% 100% /0.1) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 20% 50%, hsl(0 0% 100% /0.06), transparent 60%)",
         }}
       />
 
@@ -29,7 +29,7 @@ const Founder = () => {
 
         {/* Section label */}
         <motion.p
-          className="text-xs font-mono-data tracking-widest text-primary uppercase mb-10 md:mb-14"
+          className="section-eyebrow mb-10 md:mb-14"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
@@ -50,7 +50,7 @@ const Founder = () => {
           <div
             className="pointer-events-none absolute top-0 left-0 right-0 h-px"
             aria-hidden
-            style={{ background: "linear-gradient(90deg, transparent, hsla(259,95%,65%,0.4), transparent)" }}
+            style={{ background: "linear-gradient(90deg, transparent, hsl(0 0% 100% /0.4), transparent)" }}
           />
 
           <div className="grid lg:grid-cols-[1fr_420px] gap-0">
@@ -67,7 +67,7 @@ const Founder = () => {
                   transition={{ duration: 0.5, delay: 0.15 }}
                 >
                   {/* Avatar — mobile only */}
-                  <div className="lg:hidden relative w-14 h-14 rounded-2xl overflow-hidden border border-primary/30 shrink-0 shadow-[0_0_20px_hsla(259,95%,65%,0.2)]">
+                  <div className="lg:hidden relative w-14 h-14 rounded-2xl overflow-hidden border border-primary/30 shrink-0 shadow-[0_0_20px_hsl(0 0% 100% /0.2)]">
                     <img
                       src="/founder-ansh-malviya.png"
                       alt="Ansh Malviya"
@@ -78,7 +78,7 @@ const Founder = () => {
                     <h2 className="text-xl sm:text-2xl font-display font-bold text-foreground leading-tight">
                       Ansh Malviya
                     </h2>
-                    <p className="text-xs font-mono-data text-primary mt-0.5">Founder, WebCom Media</p>
+                    <p className="text-xs font-mono-data text-primary mt-0.5">Founder & AI Consultant</p>
                   </div>
                 </motion.div>
 
@@ -88,8 +88,8 @@ const Founder = () => {
                   animate={cardInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  Built by someone who's obsessed with{" "}
-                  <span className="text-primary">making your money work harder.</span>
+                  Built by someone who helps you{" "}
+                  <span className="text-primary">find AI leverage — not sell you hours.</span>
                 </motion.h3>
 
                 <motion.div
@@ -98,10 +98,10 @@ const Founder = () => {
                   transition={{ duration: 0.5, delay: 0.28 }}
                 >
                   <p className="text-muted-foreground leading-relaxed mb-4 text-sm sm:text-base max-w-xl">
-                    WebCom Media started with one belief: most agencies are selling you activity, not results. Dashboards full of impressions. Reports full of excuses. I built this agency to be different — every decision we make is tied directly to your revenue.
+                    WebCom Media is a solo AI consulting practice. I started it after seeing too many businesses buy tools they never use — or hire agencies that run activity without strategic direction.
                   </p>
                   <p className="text-muted-foreground leading-relaxed text-sm sm:text-base max-w-xl">
-                    I stay personally close to every client account. Not because I have to — because I want to. When your ROAS goes up, I feel it. When it dips, I'm already on it before you notice.
+                    Today I work with leaders on discovery calls, audit sessions, and on-demand advice — mapping where AI fits across operations, sales, marketing, and teams. When build support makes sense and capacity allows, I help selectively. I do not take on full agency retainers.
                   </p>
                 </motion.div>
               </div>
@@ -115,11 +115,11 @@ const Founder = () => {
               >
                 <div
                   className="pointer-events-none absolute -left-px top-0 bottom-0 w-px"
-                  style={{ background: "linear-gradient(180deg, transparent, hsla(259,95%,65%,0.8), transparent)" }}
+                  style={{ background: "linear-gradient(180deg, transparent, hsl(0 0% 100% /0.8), transparent)" }}
                   aria-hidden
                 />
                 <p className="text-base sm:text-lg text-foreground font-display italic leading-relaxed">
-                  "My job is simple — make your ad spend feel like an investment, not an expense. Clear communication, aggressive testing, and zero hiding behind complicated dashboards."
+                  "My job is simple — help you see where AI belongs in your business, in plain language, with a roadmap you can actually follow. No vanity metrics. No overselling execution you do not need."
                 </p>
                 <p className="text-xs font-mono-data text-muted-foreground mt-3">— Ansh Malviya</p>
               </motion.div>
@@ -136,8 +136,7 @@ const Founder = () => {
                     key={s.label}
                     className="flex-1 min-w-[90px] rounded-2xl border border-white/5 bg-background/60 px-4 py-3 text-center"
                   >
-                    <p className="text-xl sm:text-2xl font-bold text-primary font-mono-data">
-                      {s.prefix && <span>{s.prefix}</span>}
+                    <p className="text-xl sm:text-2xl font-bold text-gold-light font-mono-data">
                       <CountUp
                         from={0}
                         to={s.value}
@@ -145,7 +144,7 @@ const Founder = () => {
                         delay={0.5}
                         className="tabular-nums"
                       />
-                      {s.suffix && <span>{s.suffix}</span>}
+                      {s.suffix}
                     </p>
                     <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5">{s.label}</p>
                   </div>
@@ -154,24 +153,30 @@ const Founder = () => {
 
               {/* CTAs */}
               <motion.div
-                className="flex flex-col sm:flex-row gap-3"
+                className="flex flex-col sm:flex-row flex-wrap gap-3"
                 initial={{ opacity: 0, y: 16 }}
                 animate={cardInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.48 }}
               >
                 <a
-                  href="mailto:anshmalviya010@gmail.com"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:-translate-y-px hover:shadow-[0_0_25px_hsla(259,95%,65%,0.5)] active:scale-[0.98]"
+                  href="#cta"
+                  className="btn-cta gap-2 px-5 py-3 rounded-lg text-sm"
                 >
-                  <Mail size={15} />
-                  Book a Call with Me
+                  {consultingCopy.ctaPrimary}
                   <ArrowRight size={14} />
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/imanshmalviya/"
+                  href={`mailto:${consultingCopy.contactEmail}`}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg border border-gold/25 bg-card/60 text-sm text-foreground transition-all duration-200 hover:border-gold/45 hover:bg-card hover:-translate-y-px"
+                >
+                  <Mail size={15} />
+                  Email
+                </a>
+                <a
+                  href={consultingCopy.linkedInUrl}
                   target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-white/5 bg-card/60 text-sm text-foreground transition-all duration-200 hover:border-primary/50 hover:bg-card hover:-translate-y-px"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg border border-white/5 bg-card/60 text-sm text-foreground transition-all duration-200 hover:border-gold/35 hover:bg-card hover:-translate-y-px"
                 >
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
@@ -186,40 +191,30 @@ const Founder = () => {
             <div className="hidden lg:block relative overflow-hidden">
               <img
                 src="/founder-ansh-malviya.png"
-                alt="Ansh Malviya — Founder, WebCom Media"
+                alt="Ansh Malviya — Founder and AI Consultant, WebCom Media"
                 className="w-full h-full object-cover object-top"
                 style={{ minHeight: "500px" }}
               />
               {/* Gradient fade left edge */}
               <div
                 className="absolute inset-y-0 left-0 w-24 pointer-events-none"
-                style={{ background: "linear-gradient(90deg, hsl(256,36%,12%), transparent)" }}
+                style={{ background: "linear-gradient(90deg, hsl(0 0% 7%), transparent)" }}
                 aria-hidden
               />
               {/* Gradient fade bottom */}
               <div
                 className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
-                style={{ background: "linear-gradient(180deg, transparent, hsl(256,36%,12%))" }}
+                style={{ background: "linear-gradient(180deg, transparent, hsl(0 0% 7%))" }}
                 aria-hidden
               />
               {/* Glow overlay */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                  background: "radial-gradient(ellipse 80% 60% at 50% 30%, hsla(259,95%,65%,0.08), transparent 70%)",
+                  background: "radial-gradient(ellipse 80% 60% at 50% 30%, hsl(0 0% 100% /0.08), transparent 70%)",
                 }}
                 aria-hidden
               />
-              {/* Floating badge */}
-              <motion.div
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-card/80 backdrop-blur-md shadow-lg whitespace-nowrap"
-                initial={{ opacity: 0, y: 12 }}
-                animate={cardInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-xs font-mono-data text-muted-foreground">Available for clients</span>
-              </motion.div>
             </div>
           </div>
         </motion.div>

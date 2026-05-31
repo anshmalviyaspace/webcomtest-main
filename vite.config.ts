@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => ({
           if (id.includes("recharts")) return "recharts";
           if (id.includes("@radix-ui")) return "radix";
           if (id.includes("lucide-react")) return "icons";
+          if (id.includes("motion") || id.includes("framer-motion")) return "motion";
         },
       },
     },

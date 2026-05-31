@@ -1,35 +1,36 @@
 import { Marquee } from "@/components/ui/marquee";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
+import { useVisibilityPause } from "@/hooks/useVisibilityPause";
 
 const testimonials = [
   {
     quote:
-      "WebCom Media transformed our digital presence. Their strategic approach and consistent results have been invaluable to our growth.",
+      "WebCom Media gave us clarity on where AI actually fits — not hype, but practical next steps we could act on.",
     name: "Ansh",
-    company: "Average",
+    company: "JustBuild",
   },
   {
     quote:
-      "Working with WebCom Media has been a game-changer. Professional, reliable, and results-driven. Highly recommended!",
+      "Professional, direct, and focused on what matters. The roadmap from our session was worth more than months of guessing.",
     name: "Aishwary Singh",
     company: "SXTHGR",
   },
   {
     quote:
-      "Their honest communication and practical approach to digital world helped us achieve real growth. Great partners to have.",
+      "Honest communication and a practical view of AI in our business. Exactly the strategic partner we needed.",
     name: "Mann",
     company: "Kravic",
   },
   {
     quote:
-      "From strategy to execution, WebCom Media delivers. They understand our business and help us achieve meaningful results.",
+      "They understand our operations and helped us prioritize AI opportunities without overselling execution we did not need.",
     name: "Shailesh Malviya",
     company: "Prabhat Digital Electronics",
   },
   {
     quote:
-      "Excellent service and support. WebCom Media's team is responsive, knowledgeable, and committed to our success.",
+      "Responsive and knowledgeable. The consulting approach felt personal — not like another agency pitch.",
     name: "Sumit Sharma",
     company: "Prabhat Digital Signage",
   },
@@ -67,9 +68,14 @@ const marqueeCards = testimonials.map((t) => (
 const Clients = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
+  const { ref: sectionRef, isActive } = useVisibilityPause<HTMLElement>();
 
   return (
-    <section id="clients" className="py-10 md:py-28 bg-card overflow-hidden">
+    <section
+      id="clients"
+      ref={sectionRef}
+      className={`py-10 md:py-28 bg-card overflow-hidden ${!isActive ? "anim-paused" : ""}`}
+    >
       <div className="container px-4 sm:px-6 lg:px-8">
         <div ref={headerRef} className="max-w-lg mb-10 md:mb-12">
           <motion.p
@@ -78,7 +84,7 @@ const Clients = () => {
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            Testimonials
+            Client Stories
           </motion.p>
           <motion.h2
             className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4 text-balance"
@@ -86,7 +92,7 @@ const Clients = () => {
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            What Brands Say After We Automate Their Growth
+            What Clients Say About Working With Us
           </motion.h2>
           <motion.p
             className="text-muted-foreground"
@@ -94,7 +100,7 @@ const Clients = () => {
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Real results from real businesses we've transformed.
+            Clarity, strategy, and practical AI direction — from real conversations.
           </motion.p>
         </div>
       </div>
@@ -103,10 +109,10 @@ const Clients = () => {
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-20 bg-gradient-to-r from-card to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-20 bg-gradient-to-l from-card to-transparent" />
 
-        <Marquee pauseOnHover className="[--duration:55s] [--gap:1.25rem]" repeat={4}>
+        <Marquee pauseOnHover className="[--duration:55s] [--gap:1.25rem]" repeat={2}>
           {marqueeCards}
         </Marquee>
-        <Marquee reverse pauseOnHover className="[--duration:70s] [--gap:1.25rem]" repeat={4}>
+        <Marquee reverse pauseOnHover className="[--duration:70s] [--gap:1.25rem]" repeat={2}>
           {marqueeCards}
         </Marquee>
       </div>

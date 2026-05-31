@@ -3,6 +3,8 @@ import { ShineBorder } from "@/registry/magicui/shine-border";
 import { AnimatePresence, motion } from "motion/react";
 import type { LucideIcon } from "lucide-react";
 import { useState, type ReactNode } from "react";
+import { usePerformanceProfile } from "@/hooks/usePerformanceProfile";
+import { shineColors } from "@/theme/consulting-palette";
 
 export type HoverEffectItem = {
   title: string;
@@ -74,17 +76,20 @@ export const Card = ({
   className?: string;
   children: ReactNode;
 }) => {
+  const { enableHeavyEffects } = usePerformanceProfile();
+
   return (
     <div
       className={cn(
         "relative overflow-hidden rounded-2xl h-full w-full z-20",
         "bg-gradient-to-b from-background/90 via-background/75 to-background/60",
-        "shadow-[0_22px_56px_rgba(0,0,0,0.35),0_0_48px_-16px_hsla(259,95%,65%,0.1)]",
+        "shadow-[0_22px_56px_rgba(0,0,0,0.35),0_0_48px_-16px_hsl(0 0% 100% /0.1)]",
         className
       )}
     >
       <ShineBorder
-        shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+        enabled={enableHeavyEffects}
+        shineColor={shineColors}
         borderWidth={1}
         duration={14}
         className="z-0"

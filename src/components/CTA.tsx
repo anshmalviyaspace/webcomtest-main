@@ -2,6 +2,9 @@ import { useState, useRef } from "react";
 import { ArrowRight, CheckCircle, Bot, BarChart3, Workflow, Zap, ChevronLeft, ChevronRight, Clock, Calendar } from "lucide-react";
 import { ShineBorder } from "@/registry/magicui/shine-border";
 import { motion, useInView } from "motion/react";
+import { consultingCopy } from "@/content/consultingCopy";
+import { usePerformanceProfile } from "@/hooks/usePerformanceProfile";
+import { shineColors } from "@/theme/consulting-palette";
 import {
   format,
   addMonths,
@@ -18,7 +21,7 @@ import {
 } from "date-fns";
 
 /* ── Config ── */
-const CONTACT_EMAIL = "webcommedia1@gmail.com";
+const CONTACT_EMAIL = consultingCopy.contactEmail;
 
 const TIME_SLOTS = [
   "9:00 AM", "10:00 AM", "11:00 AM",
@@ -27,16 +30,16 @@ const TIME_SLOTS = [
 ];
 
 const benefits = [
-  "A full map of where AI can replace manual work in your marketing",
-  "A custom automation blueprint built for your business model",
-  "Clarity on your current ad spend efficiency and ROAS potential",
-  "A reliable partner who builds systems, not just runs campaigns",
+  "A map of AI opportunities across your business — not only marketing",
+  "A prioritized roadmap with quick wins you can implement yourself",
+  "Tool and stack recommendations matched to your constraints",
+  "Optional guidance if you want selective hands-on build support",
 ];
 
 const auditItems = [
   { icon: Bot,       label: "AI Readiness Assessment" },
-  { icon: Workflow,  label: "Automation Opportunity Map" },
-  { icon: BarChart3, label: "Paid Media Audit" },
+  { icon: Workflow,  label: "Workflow Opportunity Map" },
+  { icon: BarChart3, label: "Cross-Domain Systems Review" },
   { icon: Zap,       label: "Quick-Win Action Plan" },
 ];
 
@@ -108,7 +111,7 @@ const MiniCalendar = ({
                 ${!isThisMonth ? "opacity-20 pointer-events-none" : ""}
                 ${disabled && isThisMonth ? "opacity-30 cursor-not-allowed" : ""}
                 ${isSelected
-                  ? "bg-primary text-primary-foreground shadow-[0_0_12px_hsla(259,95%,65%,0.5)]"
+                  ? "bg-cta text-cta-foreground shadow-[0_0_12px_hsl(var(--gold-glow)_/_0.4)]"
                   : isToday && !disabled
                   ? "border border-primary/50 text-primary"
                   : !disabled
@@ -131,6 +134,7 @@ const MiniCalendar = ({
 
 /* ── Main CTA ── */
 const CTA = () => {
+  const { enableHeavyEffects } = usePerformanceProfile();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [booked, setBooked]             = useState(false);
@@ -143,9 +147,9 @@ const CTA = () => {
     if (!canBook) return;
 
     const dateStr = format(selectedDate!, "EEEE, MMMM d, yyyy");
-    const subject = encodeURIComponent(`AI Audit Request — ${dateStr} at ${selectedTime}`);
+    const subject = encodeURIComponent(`AI Discovery Call Request — ${dateStr} at ${selectedTime}`);
     const body    = encodeURIComponent(
-      `Hi WebCom Media,\n\nI'd like to book a free AI Audit call.\n\nPreferred date: ${dateStr}\nPreferred time: ${selectedTime} (IST)\n\n[Add any additional details or questions here]\n\nLooking forward to speaking with you.`
+      `Hi WebCom Media,\n\nI'd like to book a free AI Discovery Call.\n\nPreferred date: ${dateStr}\nPreferred time: ${selectedTime} (IST)\n\n[Add any additional details or questions here]\n\nLooking forward to speaking with you.`
     );
 
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
@@ -160,7 +164,7 @@ const CTA = () => {
         aria-hidden
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 50% 100%, hsla(259,95%,65%,0.12), transparent 65%), radial-gradient(ellipse 50% 40% at 80% 20%, hsla(311,95%,76%,0.08), transparent 60%)",
+            "radial-gradient(ellipse 70% 60% at 50% 100%, hsl(0 0% 100% /0.12), transparent 65%), radial-gradient(ellipse 50% 40% at 80% 20%, hsl(0 0% 100% /0.08), transparent 60%)",
         }}
       />
 
@@ -175,7 +179,7 @@ const CTA = () => {
             transition={{ duration: 0.5 }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-xs font-mono-data text-primary tracking-widest uppercase">Free AI Audit Call</span>
+            <span className="text-xs font-mono-data text-primary tracking-widest uppercase">Free AI Discovery Call</span>
           </motion.div>
           <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground text-balance leading-[1.1] max-w-3xl mx-auto"
@@ -183,7 +187,7 @@ const CTA = () => {
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Find out exactly how AI can transform your marketing in 15 minutes.
+            Find out where AI fits in your business — in 15 minutes.
           </motion.h2>
         </div>
 
@@ -193,7 +197,7 @@ const CTA = () => {
           {/* Col 1 — Benefits */}
           <div className="flex flex-col gap-6">
             <p className="text-muted-foreground text-base leading-relaxed">
-              By the end of this call, you'll have a clear picture of where AI fits in your business — and a concrete first step to start automating your growth.
+              By the end of this call, you will know where to start with AI — and whether a deeper audit or on-demand consulting makes sense for you.
             </p>
             <div className="space-y-3">
               {benefits.map((b, i) => (
@@ -216,7 +220,8 @@ const CTA = () => {
           {/* Col 2 — Calendar + time picker */}
           <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-background/60 p-5 sm:p-6">
             <ShineBorder
-              shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+              enabled={enableHeavyEffects}
+              shineColor={shineColors}
               borderWidth={1}
               duration={14}
               className="z-0"
@@ -250,7 +255,7 @@ const CTA = () => {
                         className={`
                           px-1 py-2 rounded-lg text-[10px] sm:text-xs font-mono-data font-medium transition-all duration-150
                           ${selectedTime === slot
-                            ? "bg-primary text-primary-foreground shadow-[0_0_10px_hsla(259,95%,65%,0.4)]"
+                            ? "bg-cta text-cta-foreground shadow-[0_0_10px_hsl(var(--gold-glow)_/_0.4)]"
                             : "border border-border/50 text-muted-foreground hover:border-primary/40 hover:text-primary hover:bg-primary/10"
                           }
                         `}
@@ -279,12 +284,12 @@ const CTA = () => {
                   mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl
                   text-sm font-medium transition-all duration-200
                   ${canBook
-                    ? "bg-primary text-primary-foreground hover:-translate-y-px hover:shadow-[0_0_25px_hsla(259,95%,65%,0.5)] active:scale-[0.98] cursor-pointer"
+                    ? "btn-cta hover:-translate-y-px active:scale-[0.98] cursor-pointer"
                     : "bg-muted text-muted-foreground cursor-not-allowed opacity-50"
                   }
                 `}
               >
-                {booked ? "✓ Email opened — hit send!" : "Schedule Your AI Audit"}
+                {booked ? "✓ Email opened — hit send!" : "Schedule Discovery Call"}
                 {!booked && <ArrowRight size={15} />}
               </button>
 
@@ -303,7 +308,8 @@ const CTA = () => {
           {/* Col 3 — What's included */}
           <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-background/60 p-5 sm:p-6">
             <ShineBorder
-              shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+              enabled={enableHeavyEffects}
+              shineColor={shineColors}
               borderWidth={1}
               duration={18}
               className="z-0"
@@ -329,7 +335,7 @@ const CTA = () => {
                   <span className="text-xs font-mono-data text-muted-foreground">Spots available this week</span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  We take on a limited number of new clients each month to ensure quality.
+                  Limited discovery slots each week — solo practice, high-touch advisory.
                 </p>
                 <div className="pt-1 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
