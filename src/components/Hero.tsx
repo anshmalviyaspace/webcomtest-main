@@ -156,7 +156,7 @@ const TICKER = [
 const Hero = () => {
   const profile = usePerformanceProfile();
   const { ref: heroRef, isActive: heroVisible } = useVisibilityPause<HTMLElement>();
-  const useStaticPillar = profile.prefersReducedMotion || profile.isMobile;
+  const useStaticPillar = profile.prefersReducedMotion;
   const pillarQuality = profile.isLowEnd ? "low" : "medium";
 
   return (
@@ -164,7 +164,7 @@ const Hero = () => {
       ref={heroRef}
       className={`relative w-full overflow-hidden bg-background pt-28 pb-12 sm:pt-36 md:pt-48 md:pb-28 ${!profile.enableHeavyEffects ? "anim-paused" : ""}`}
     >
-      {/* Gold light blur — WebGL pillar on desktop, CSS blur on mobile */}
+      {/* Gold light blur — WebGL pillar; CSS fallback only when reduced motion */}
       <div className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }}>
         {useStaticPillar ? (
           <HeroPillarBackdrop />
@@ -274,14 +274,7 @@ const Hero = () => {
         </div>
 
         <div className="lg:hidden w-full relative mt-6">
-          <TerminalVisual
-            canvasHeight={180}
-            iconSize={13}
-            nodeBoxSize="w-8 h-8"
-            labelClass="text-[7.5px]"
-            packetSize="w-1 h-1"
-            gradientIdSuffix="m"
-          />
+          <TerminalVisual gradientIdSuffix="m" />
           <div className="absolute -top-2.5 -right-2 px-2.5 py-1 rounded-lg border border-gold/30 bg-card/95 backdrop-blur-sm">
             <p className="text-[10px] font-mono-data text-gold-light font-medium">AI roadmap delivered</p>
           </div>

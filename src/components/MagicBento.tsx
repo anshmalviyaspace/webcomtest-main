@@ -35,8 +35,6 @@ export interface BentoProps {
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
 const DEFAULT_GLOW_COLOR = "132, 0, 255";
-const MOBILE_BREAKPOINT = 768;
-
 const defaultCardData: BentoCardProps[] = [
   { color: "#060010", title: "Analytics", description: "Track user behavior", label: "Insights" },
   { color: "#060010", title: "Dashboard", description: "Centralized data view", label: "Overview" },
@@ -663,21 +661,6 @@ const BentoCardGrid: React.FC<{
   </div>
 );
 
-const useMobileDetection = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  return isMobile;
-};
-
 const MagicBento: React.FC<BentoProps> = ({
   textAutoHide = true,
   enableStars = true,
@@ -694,8 +677,7 @@ const MagicBento: React.FC<BentoProps> = ({
   layout = "bento",
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMobileDetection();
-  const shouldDisableAnimations = disableAnimations || isMobile;
+  const shouldDisableAnimations = disableAnimations;
   const cardData = items?.length ? items : defaultCardData;
   const gridClass = layout === "even" ? "card-responsive-even" : "card-responsive";
 

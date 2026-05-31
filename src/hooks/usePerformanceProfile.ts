@@ -21,13 +21,14 @@ function readProfile(): PerformanceProfile {
   const isMobile = window.matchMedia("(max-width: 767px)").matches;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const cores = navigator.hardwareConcurrency ?? 8;
-  const isLowEnd = isMobile || cores <= 4;
+  const isLowEnd = cores <= 4;
 
   return {
     isMobile,
     isLowEnd,
     prefersReducedMotion,
-    enableHeavyEffects: !prefersReducedMotion && !isLowEnd,
+    /** Full motion on mobile; only off when user prefers reduced motion */
+    enableHeavyEffects: !prefersReducedMotion,
   };
 }
 

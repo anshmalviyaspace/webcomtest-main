@@ -1,5 +1,4 @@
 import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
-import { usePerformanceProfile } from "@/hooks/usePerformanceProfile";
 import { useVisibilityPause } from "@/hooks/useVisibilityPause";
 import logoConcepz from "@/assets/trust/logo-concepz.png";
 import logoMg from "@/assets/trust/logo-mg.png";
@@ -27,7 +26,6 @@ const loopLogos: LogoItem[] = trustBrands.map((b) => ({
 }));
 
 const TrustLogos = () => {
-  const { isMobile } = usePerformanceProfile();
   const { ref, isActive } = useVisibilityPause<HTMLElement>();
 
   return (
@@ -60,7 +58,7 @@ const TrustLogos = () => {
         <div className="py-6 md:py-8 overflow-hidden">
           <LogoLoop
             logos={loopLogos}
-            speed={isMobile ? 28 : 42}
+            speed={42}
             paused={!isActive}
             direction="left"
             logoHeight={44}

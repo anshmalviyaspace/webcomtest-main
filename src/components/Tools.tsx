@@ -36,7 +36,7 @@ const toolBentoItems: BentoCardProps[] = tools.map((tool) => ({
 const Tools = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
-  const { isMobile, enableHeavyEffects } = usePerformanceProfile();
+  const { enableHeavyEffects } = usePerformanceProfile();
 
   return (
     <section id="tools" className="py-10 md:py-28">
@@ -72,8 +72,8 @@ const Tools = () => {
           items={toolBentoItems}
           layout="even"
           textAutoHide={true}
-          enableStars={enableHeavyEffects && !isMobile}
-          enableSpotlight={enableHeavyEffects && !isMobile}
+          enableStars={enableHeavyEffects}
+          enableSpotlight={enableHeavyEffects}
           enableBorderGlow={true}
           enableTilt={false}
           enableMagnetism={false}

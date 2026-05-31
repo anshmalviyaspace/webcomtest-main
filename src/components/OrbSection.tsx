@@ -4,7 +4,7 @@ import { Brain, BarChart3, Bot, Workflow, TrendingUp, Users, Headphones, ArrowRi
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { motion, useInView } from "motion/react";
 
-/* ─── Deep-space particle canvas (pauses off-screen, throttled on mobile) ─── */
+/* ─── Deep-space particle canvas (pauses off-screen) ─── */
 const SpaceCanvas = ({ active }: { active: boolean }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -16,10 +16,8 @@ const SpaceCanvas = ({ active }: { active: boolean }) => {
 
     let animId = 0;
     let lastFrame = 0;
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const targetFps = isMobile ? 24 : 40;
+    const targetFps = 40;
     const frameInterval = 1000 / targetFps;
-    const drawConnections = !isMobile;
 
     type Particle = { x: number; y: number; vx: number; vy: number; r: number; alpha: number };
     const particles: Particle[] = [];
@@ -27,7 +25,7 @@ const SpaceCanvas = ({ active }: { active: boolean }) => {
     const resize = () => {
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
-      const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.5);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = Math.floor(w * dpr);
       canvas.height = Math.floor(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -40,7 +38,7 @@ const SpaceCanvas = ({ active }: { active: boolean }) => {
       particles.length = 0;
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
-      const count = Math.min(isMobile ? 35 : 55, Math.floor((w * h) / 12000));
+      const count = Math.min(55, Math.floor((w * h) / 12000));
       for (let i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * w,
@@ -74,22 +72,20 @@ const SpaceCanvas = ({ active }: { active: boolean }) => {
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
 
-      if (drawConnections) {
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const d = dx * dx + dy * dy;
-            if (d < CONNECT_DIST * CONNECT_DIST) {
-              const dist = Math.sqrt(d);
-              const opacity = 0.08 * (1 - dist / CONNECT_DIST);
-              ctx.beginPath();
-              ctx.strokeStyle = `hsl(0 0% 100% /${opacity})`;
-              ctx.lineWidth = 0.5;
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.stroke();
-            }
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d = dx * dx + dy * dy;
+          if (d < CONNECT_DIST * CONNECT_DIST) {
+            const dist = Math.sqrt(d);
+            const opacity = 0.08 * (1 - dist / CONNECT_DIST);
+            ctx.beginPath();
+            ctx.strokeStyle = `hsl(0 0% 100% /${opacity})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
           }
         }
       }

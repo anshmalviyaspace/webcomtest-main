@@ -465,24 +465,6 @@
   }
 }
 
-@media (max-width: 767px) {
-  .orb-ring-dash,
-  .orb-ring-solid,
-  .orb-dot-orbit-1,
-  .orb-dot-orbit-2,
-  .orb-core-pulse {
-    animation-duration: 24s;
-  }
-  .hero-packet,
-  .hero-edge {
-    animation: none;
-  }
-  .ai-scanline {
-    opacity: 0.15;
-    animation-duration: 12s;
-  }
-}
-
 @media (min-width: 768px) {
   body {
     background-attachment: fixed;

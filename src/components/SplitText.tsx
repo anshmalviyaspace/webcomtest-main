@@ -53,9 +53,7 @@ const SplitText: React.FC<SplitTextProps> = ({
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const mobile = window.matchMedia("(max-width: 767px)").matches;
-    const lowEnd = (navigator.hardwareConcurrency ?? 8) <= 4;
-    setSkipAnimation(reduced || mobile || lowEnd);
+    setSkipAnimation(reduced);
   }, []);
 
   useEffect(() => {
