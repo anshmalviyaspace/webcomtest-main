@@ -7,19 +7,19 @@ const testimonials = [
   {
     quote:
       "WebCom Media gave us clarity on where AI actually fits — not hype, but practical next steps we could act on.",
-    name: "Ansh",
+    name: "Ansh Malviya",
     company: "JustBuild",
   },
   {
     quote:
       "Professional, direct, and focused on what matters. The roadmap from our session was worth more than months of guessing.",
     name: "Aishwary Singh",
-    company: "SXTHGR",
+    company: "Vrik Lumiere",
   },
   {
     quote:
       "Honest communication and a practical view of AI in our business. Exactly the strategic partner we needed.",
-    name: "Mann",
+    name: "Ansh Malviya",
     company: "Kravic",
   },
   {
