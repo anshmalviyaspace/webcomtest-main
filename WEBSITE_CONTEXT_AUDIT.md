@@ -13,7 +13,7 @@ Read-only reference for the marketing site in `webcomtest-main`. Last updated: M
 **Primary conversion:** “Book a Free AI Discovery Call” — 15-minute call via `mailto:`.
 
 **Domain:** `webcommedia.in`  
-**Contact:** `webcommedia1@gmail.com`
+**Contact:** `hello@webcommedia.in`
 
 ---
 

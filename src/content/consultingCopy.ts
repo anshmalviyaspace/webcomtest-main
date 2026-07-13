@@ -7,7 +7,7 @@ export const consultingCopy = {
   ctaPrimary: "Book a Free AI Discovery Call",
   ctaSecondary: "See Consulting Areas",
   philosophyLine: "We don't run your business. We show you where AI should.",
-  contactEmail: "webcommedia1@gmail.com",
+  contactEmail: "hello@webcommedia.in",
   linkedInUrl: "https://www.linkedin.com/company/webcommedia",
 } as const;
 
