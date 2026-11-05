@@ -2,8 +2,8 @@ import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
 const founders = [
-  { name: "Ansh Malviya", role: "Co-founder", image: "/founder-ansh-malviya.png" },
-  { name: "Anish Minj", role: "Co-founder", image: "/cofounder-02.png" },
+  { name: "Ansh Malviya", role: "Co-founder", image: `${import.meta.env.BASE_URL}founder-ansh-malviya.png` },
+  { name: "Anish Minj", role: "Co-founder", image: `${import.meta.env.BASE_URL}cofounder-02.png` },
 ];
 
 const Founder = () => (

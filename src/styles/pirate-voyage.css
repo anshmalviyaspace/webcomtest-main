@@ -112,7 +112,7 @@ html.fine #cur,html.fine #ping{display:block}
 #cloudA svg{display:block;width:300px;height:80px}
 
 /* Full-screen chapter pages sit inside the moving pirate scene. */
-.chapter-views{left:96px;top:115px;width:1408px;height:770px;z-index:12;opacity:0;pointer-events:none;will-change:transform,opacity}
+.chapter-views{left:210px;top:130px;width:1180px;height:640px;z-index:12;opacity:0;pointer-events:none;will-change:transform,opacity}
 .chapter-page{position:absolute;inset:0;display:none;overflow:hidden;padding:36px 46px 30px;border:3px solid var(--line);border-radius:28px;background:rgba(230,224,207,.96);box-shadow:0 9px 0 -2px var(--paper),0 9px 0 1px var(--line);color:var(--ink)}
 #frame[data-page="services"] #page-services,
 #frame[data-page="approach"] #page-approach,
@@ -212,7 +212,7 @@ html.fine #cur,html.fine #ping{display:block}
 }
 
 /* Tall canvases use the portrait design box at every viewport width. */
-.portrait .chapter-views{left:24px;top:85px;width:752px;height:1400px}
+.portrait .chapter-views{left:50px;top:135px;width:700px;height:1230px}
 .portrait .chapter-page{padding:28px 30px 26px;border-radius:24px}
 .portrait .chapter-page h2{font-size:76px}
 .portrait .chapter-kicker{font-size:18px}

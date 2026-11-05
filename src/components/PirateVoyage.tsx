@@ -6,6 +6,7 @@ const P = "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0
 const SHIP = `${P}20261031_024714_39df675e-5060-4528-87dc-9d0c274815aa.png&w=1600&q=90`;
 const CAPT = `${P}20261031_024703_a0298b6a-0117-47f1-8462-4be671d0407e.png&w=2048&q=90`;
 const PLANTS = `${P}20261031_024704_3ccf1ac2-bec7-4fdb-bfce-ac19eca8db28.png&w=2048&q=90`;
+const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
 const LAY = {
   land: {
@@ -121,7 +122,6 @@ const PirateVoyage = () => {
     let extraX = 20;
     let extraY = 40;
     const DUR = reduced ? 1 : 2100;
-    let replayAfterReturn = false;
     let transitionDuration = DUR;
 
     const paintShade = () => {
@@ -233,21 +233,11 @@ const PirateVoyage = () => {
     };
 
     const go = (to: number) => {
-      if (to === pTo) {
-        if (to === 1 && p > 0.96 && !replayAfterReturn) {
-          pFrom = p;
-          pTo = 0;
-          pT0 = now;
-          transitionDuration = reduced ? 1 : 500;
-          replayAfterReturn = true;
-        }
-        return;
-      }
+      if (to === pTo) return;
       pFrom = p;
       pTo = to;
       pT0 = now;
       transitionDuration = DUR;
-      replayAfterReturn = false;
     };
 
     const selectChapter = (chapter: string) => {
@@ -307,7 +297,8 @@ const PirateVoyage = () => {
     };
     const wheelHandler = (event: WheelEvent) => {
       if (now < wheelLockedUntil || Math.abs(event.deltaY) <= 8) return;
-      go(event.deltaY > 8 ? 1 : 0);
+      if (event.deltaY < -8 && frame.dataset.page !== "home") selectChapter("home");
+      else go(event.deltaY > 8 ? 1 : 0);
       wheelLockedUntil = now + 1200;
     };
     const touchStartHandler = (event: TouchEvent) => {
@@ -319,7 +310,8 @@ const PirateVoyage = () => {
       if (endY === undefined) return;
       const delta = touchStartY - endY;
       if (Math.abs(delta) > 42) {
-        go(delta > 0 ? 1 : 0);
+        if (delta < 0 && frame.dataset.page !== "home") selectChapter("home");
+        else go(delta > 0 ? 1 : 0);
         wheelLockedUntil = now + 1200;
       }
       touchStartY = null;
@@ -332,7 +324,10 @@ const PirateVoyage = () => {
         navToggle?.setAttribute("aria-label", "Open navigation");
       }
       if (event.key === "ArrowDown" || event.key === "PageDown") go(1);
-      if (event.key === "ArrowUp" || event.key === "PageUp") go(0);
+      if (event.key === "ArrowUp" || event.key === "PageUp") {
+        if (frame.dataset.page !== "home") selectChapter("home");
+        else go(0);
+      }
     };
 
     const render = (rafNow: number) => {
@@ -344,14 +339,6 @@ const PirateVoyage = () => {
       p = mix(pFrom, pTo, io(k));
       const voyageState = p > 0.68 ? "island" : "sea";
       if (frame.dataset.voyage !== voyageState) frame.dataset.voyage = voyageState;
-      if (k >= 1 && replayAfterReturn && pTo === 0) {
-        p = 0;
-        pFrom = 0;
-        pTo = 1;
-        pT0 = now;
-        transitionDuration = DUR;
-        replayAfterReturn = false;
-      }
       const dimensions = layout as typeof LAY.land | typeof LAY.port;
       const shipConfig = dimensions.ship;
       const sw = mix(shipConfig.w0, shipConfig.w1, p);
@@ -540,8 +527,8 @@ const PirateVoyage = () => {
               <p className="founders-description">You work directly with both co-founders, from the first conversation through delivery.</p>
             </header>
             <div className="founder-profiles">
-              <article className="founder-profile"><figure className="founder-portrait"><img src="/founder-ansh-malviya.png" alt="Ansh Malviya, co-founder of WebCom Media"/></figure><div><span>CO-FOUNDER · 01</span><h3>Ansh Malviya</h3><p>WebCom Media</p></div></article>
-              <article className="founder-profile"><figure className="founder-portrait"><img src="/cofounder-02.png" alt="Anish Minj, co-founder of WebCom Media"/></figure><div><span>CO-FOUNDER · 02</span><h3>Anish Minj</h3><p>WebCom Media</p></div></article>
+              <article className="founder-profile"><figure className="founder-portrait"><img src={publicAsset("founder-ansh-malviya.png")} alt="Ansh Malviya, co-founder of WebCom Media"/></figure><div><span>CO-FOUNDER · 01</span><h3>Ansh Malviya</h3><p>WebCom Media</p></div></article>
+              <article className="founder-profile"><figure className="founder-portrait"><img src={publicAsset("cofounder-02.png")} alt="Anish Minj, co-founder of WebCom Media"/></figure><div><span>CO-FOUNDER · 02</span><h3>Anish Minj</h3><p>WebCom Media</p></div></article>
             </div>
             <a className="chapter-cta" href="mailto:hello@webcommedia.in?subject=Meet%20the%20WebCom%20Media%20founders">Start a conversation <span>↗</span></a>
           </section>
