@@ -1,102 +1,102 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
-import logoWhite from "@/assets/logo-white.png";
-import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { gsap } from "gsap";
 
-const navLinks = [
+const items = [
+  { label: "Home", href: "#top" },
   { label: "Services", href: "#services" },
-  { label: "How We Work", href: "#philosophy" },
-  { label: "Tools", href: "#tools" },
-  { label: "Results", href: "#clients" },
-  { label: "About", href: "#values" },
+  { label: "Our approach", href: "#approach" },
+  { label: "The founders", href: "#founders" },
 ];
 
+/** A compact chart-inspired navigation for the WebCom Media voyage page. */
 const Navbar = () => {
+  const navRef = useRef<HTMLElement>(null);
+  const [activeHref, setActiveHref] = useState("#top");
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const sections = ["top", "services", "approach", "founders", "contact"]
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActiveHref(`#${visible.target.id}`);
+    }, { rootMargin: "-25% 0px -60% 0px", threshold: [0, 0.15, 0.4, 0.7] });
+    sections.forEach((section) => observer.observe(section));
+
+    const onScroll = () => setScrolled(window.scrollY > 18);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
+  useEffect(() => {
+    if (!navRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    gsap.fromTo(navRef.current.querySelectorAll(".pill-nav-intro"),
+      { y: -12, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.72, stagger: 0.075, ease: "back.out(1.7)", delay: 0.12 },
+    );
+  }, []);
+
+  const closeMenu = (href: string) => {
+    setActiveHref(href);
+    setMenuOpen(false);
+  };
+
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-md shadow-sm border-b border-border/30" : "bg-transparent"
-      }`}
-    >
-      <div className="container px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14 md:h-20">
-        <a href="#" className="flex items-center gap-2 font-display text-lg md:text-xl font-bold">
-          <img
-            src={logoWhite}
-            alt="WebCom Media"
-            className="h-8 md:h-11 w-auto transition-opacity duration-300"
-          />
-          <span className="text-foreground">WebCom Media</span>
+    <header ref={navRef} className={`site-nav pill-nav-shell ${scrolled ? "site-nav-scrolled" : "site-nav-on-light"}`}>
+      <div className="site-nav-inner pill-nav-inner">
+        <a className="wordmark pill-nav-intro" href="#top" aria-label="WebCom Media home" onClick={() => closeMenu("#top")}>
+          <span className="wordmark-star" aria-hidden="true">✳</span>
+          <span>WebCom Media</span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-7">
-          {navLinks.map((link) => (
+        <nav className="pill-nav-links pill-nav-intro" aria-label="Main navigation">
+          <span className="pill-nav-active" aria-hidden="true" />
+          {items.map((item) => (
             <a
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
+              key={item.href}
+              className={`pill-nav-item ${activeHref === item.href ? "is-active" : ""}`}
+              href={item.href}
+              aria-current={activeHref === item.href ? "location" : undefined}
+              onClick={() => closeMenu(item.href)}
             >
-              {link.label}
-              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+              <span className="pill-nav-label">{item.label}</span>
+              <span className="pill-nav-roll" aria-hidden="true">{item.label}</span>
             </a>
           ))}
         </nav>
 
-        <div className="hidden md:block">
-          <HoverBorderGradient
-            as="a"
-            href="#cta"
-            containerClassName="rounded-lg"
-            innerClassName="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:-translate-y-px hover:shadow-[0_0_20px_hsl(0 0% 100% /0.4)] active:scale-[0.98]"
-          >
-            Book an AI Audit
-          </HoverBorderGradient>
-        </div>
+        <a className="nav-contact pill-nav-intro" href="#contact" onClick={() => closeMenu("#contact")}>
+          Start a project <span aria-hidden="true">↗</span>
+        </a>
 
-        <HoverBorderGradient
-          as="button"
+        <button
+          className="mobile-menu-button pill-nav-intro"
           type="button"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          containerClassName="rounded-lg md:hidden w-fit"
-          innerClassName="p-2 text-foreground bg-background/80 hover:bg-background"
-          aria-label="Toggle menu"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
         >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </HoverBorderGradient>
+          {menuOpen ? <X size={19} /> : <Menu size={19} />}
+        </button>
       </div>
 
-      {mobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border/40">
-          <nav className="container flex flex-col py-4 gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="py-3 px-4 text-sm font-medium text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-            <HoverBorderGradient
-              as="a"
-              href="#cta"
-              onClick={() => setMobileOpen(false)}
-              containerClassName="rounded-lg mt-2"
-              innerClassName="inline-flex w-full items-center justify-center px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-all duration-200 hover:-translate-y-px hover:shadow-md active:scale-[0.98]"
-            >
-              Book an AI Audit
-            </HoverBorderGradient>
-          </nav>
-        </div>
+      {menuOpen && (
+        <nav className="mobile-nav pill-nav-mobile" aria-label="Mobile navigation">
+          {items.map((item) => (
+            <a key={item.href} href={item.href} onClick={() => closeMenu(item.href)}>
+              {item.label}<span aria-hidden="true">↗</span>
+            </a>
+          ))}
+          <a href="#contact" onClick={() => closeMenu("#contact")}>Start a project <span aria-hidden="true">↗</span></a>
+        </nav>
       )}
     </header>
   );

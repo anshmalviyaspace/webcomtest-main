@@ -1,120 +1,73 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import MetricBar from "@/components/MetricBar";
-import HowWeWorkShowcase from "@/components/HowWeWorkShowcase";
-import Philosophy from "@/components/Philosophy";
+import { ArrowUpRight, MoveUpRight, Sparkles } from "lucide-react";
+import { motion } from "motion/react";
 import Services from "@/components/Services";
-import DeliverablesShowcase from "@/components/DeliverablesShowcase";
-import OrbSection from "@/components/OrbSection";
-import GlowDivider from "@/components/GlowDivider";
-import TrustLogos from "@/components/TrustLogos";
-import Clients from "@/components/Clients";
-import Values from "@/components/Values";
 import Founder from "@/components/founder";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import PerfSection from "@/components/PerfSection";
+import CrowdCanvas from "@/components/CrowdCanvas";
+import ScrollExperience from "@/components/ScrollExperience";
 
-const Tools = lazy(() => import("@/components/Tools"));
+const steps = [
+  { number: "01", title: "Get to know the business", body: "We start with your goals, your audience, and what you already have in place." },
+  { number: "02", title: "Shape the right story", body: "Together we plan the website, content, or automation that fits your next move." },
+  { number: "03", title: "Put it into motion", body: "We build, publish, and review the work so the next improvement is grounded in what we learn." },
+];
 
-function ToolsSectionSkeleton() {
-  return (
-    <section id="tools" className="py-10 md:py-28 bg-card" aria-busy="true" aria-label="Loading tools">
-      <div className="container px-4 sm:px-6 lg:px-8">
-        <div className="max-w-lg mb-12 space-y-3">
-          <div className="h-3 w-24 rounded bg-muted/40 animate-pulse" />
-          <div className="h-10 max-w-md rounded bg-muted/30 animate-pulse" />
-          <div className="h-4 max-w-sm rounded bg-muted/25 animate-pulse" />
-        </div>
-        <div className="h-80 max-w-6xl mx-auto rounded-2xl bg-muted/15 animate-pulse" />
+const HomeBelowFold = () => (
+  <>
+    <ScrollExperience />
+    <Services />
+
+    <div className="ticker-band" role="img" aria-label="Website design, social content, paid promotion, AI automation, AI consultation">
+      <div className="ticker-track" aria-hidden="true">
+        {[0, 1].map((copy) => (
+          <span className="ticker-set" key={copy}>
+            WEBSITE <i>✳</i> SOCIAL <i>✳</i> REELS <i>✳</i> AUTOMATION <i>✳</i> AI CONSULTATION <i>✳</i>
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <section className="approach-section section-wrap" id="approach">
+      <div className="approach-topline" data-gsap-reveal><span><Sparkles size={15} /> A clear process, built around you</span><MoveUpRight size={20} /></div>
+      <div className="section-heading-row approach-heading-row" data-gsap-reveal>
+        <h2 className="section-heading">From first idea<br /><em>to in the world.</em></h2>
+        <p className="section-heading-note">Good work comes from listening closely, making the important choices clear, and staying curious as it takes shape.</p>
+      </div>
+      <div className="approach-steps">
+        {steps.map((step, index) => (
+          <motion.article
+            className="approach-step"
+            key={step.number}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.55, delay: index * 0.1 }}
+          >
+            <span className="step-number">{step.number}</span>
+            <div className="step-copy"><h3>{step.title}</h3><p>{step.body}</p></div>
+            <ArrowUpRight className="step-arrow" size={19} />
+          </motion.article>
+        ))}
       </div>
     </section>
-  );
-}
 
-function DeferredTools() {
-  const sentinelRef = useRef<HTMLDivElement>(null);
-  const [load, setLoad] = useState(false);
+    <section className="crowd-moment" aria-labelledby="crowd-moment-title">
+      <div className="crowd-moment-copy" data-gsap-reveal>
+        <span className="crowd-moment-eyebrow">Ideas move when people do</span>
+        <h2 id="crowd-moment-title">Good work is always <em>in motion.</em></h2>
+        <p>From the first conversation to the next milestone, we keep your work moving forward.</p>
+      </div>
+      <div className="crowd-moment-stage" aria-hidden="true">
+        <div className="crowd-moment-ground" />
+        <CrowdCanvas src="/images/peeps/all-peeps.svg" rows={15} cols={7} />
+      </div>
+    </section>
 
-  useEffect(() => {
-    const el = sentinelRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setLoad(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "200px 0px", threshold: 0 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <>
-      <div ref={sentinelRef} className="h-px w-full shrink-0" aria-hidden />
-      {load ? (
-        <Suspense fallback={<ToolsSectionSkeleton />}>
-          <Tools />
-        </Suspense>
-      ) : (
-        <ToolsSectionSkeleton />
-      )}
-    </>
-  );
-}
-
-const HomeBelowFold = () => {
-  return (
-    <>
-      <PerfSection>
-        <MetricBar />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <HowWeWorkShowcase />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <Philosophy />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <Services />
-        <DeliverablesShowcase />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <OrbSection />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <DeferredTools />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <TrustLogos />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <Clients />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <Values />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <Founder />
-      </PerfSection>
-      <GlowDivider />
-      <PerfSection>
-        <CTA />
-      </PerfSection>
-      <Footer />
-    </>
-  );
-};
+    <Founder />
+    <CTA />
+    <Footer />
+  </>
+);
 
 export default HomeBelowFold;

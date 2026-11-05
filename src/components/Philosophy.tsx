@@ -62,8 +62,8 @@ const Philosophy = () => {
               animate={leftInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              We don&apos;t run your business.<br />
-              <span className="text-foreground">We show you where AI should.</span>
+              Start with a clear view of<br />
+              <span className="text-foreground">where AI can help.</span>
             </motion.h2>
             <motion.p
               className="text-muted-foreground leading-relaxed mb-5 sm:mb-6 text-base sm:text-lg"
@@ -71,7 +71,7 @@ const Philosophy = () => {
               animate={leftInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Most vendors sell you hours of execution. We give you clarity — where AI belongs in your business, what to prioritize, and how to move forward without guessing.
+              We look at how work moves through your business, then identify where AI can make a useful difference. You get clear priorities and a plan your team can act on.
             </motion.p>
             <motion.p
               className="text-muted-foreground leading-relaxed mb-8 sm:mb-10 text-sm sm:text-base"
@@ -79,7 +79,7 @@ const Philosophy = () => {
               animate={leftInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.28 }}
             >
-              We work with leaders who want strategic direction, not another agency retainer. If you are ready to assess AI across your whole operation — on a call, in a session, or on demand — you are in the right place.
+              Start with a short discovery call. If there is a fit, we can map your workflows in a deeper audit and help you make confident decisions as you implement.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 16 }}

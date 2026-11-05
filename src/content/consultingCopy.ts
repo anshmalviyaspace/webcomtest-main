@@ -1,16 +1,16 @@
-/** Shared messaging for AI consulting positioning */
+/** Shared public-facing copy for the Webcommedia digital and AI services site. */
 export const consultingCopy = {
-  badge: "AI Consulting for Growing Businesses",
-  headline: "We Help You Implement AI Where It Matters.",
+  badge: "Digital presence + practical AI",
+  headline: "A sharper digital presence. More room to grow.",
   subhead:
-    "Map AI across operations, sales funnels, marketing, team workflows, and data — on a call, in a session, or on demand.",
-  ctaPrimary: "Book a Free AI Discovery Call",
-  ctaSecondary: "See Consulting Areas",
-  philosophyLine: "We don't run your business. We show you where AI should.",
+    "Websites, social media, property reels, and Meta Ads—plus AI automation and consultation to help your business show up clearly and work more smoothly.",
+  ctaPrimary: "Start a project",
+  ctaSecondary: "Explore our services",
+  philosophyLine: "Good digital work makes business feel easier.",
   contactEmail: "hello@webcommedia.in",
   linkedInUrl: "https://www.linkedin.com/company/webcommedia",
 } as const;
 
-export function mailtoHref(subject = "WebCom Media Inquiry") {
+export function mailtoHref(subject = "New Webcommedia project") {
   return `mailto:${consultingCopy.contactEmail}?subject=${encodeURIComponent(subject)}`;
 }

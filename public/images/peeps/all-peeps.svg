@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1120" viewBox="0 0 1200 1120">
+  <defs>
+    <g id="peep" stroke="#20252a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M32 57 18 82M48 57l14 24" fill="none" stroke="var(--skin)" stroke-width="8"/>
+      <path d="m28 51 5-8h14l5 8 5 54H24z" fill="var(--shirt)"/>
+      <path d="m31 103-2 27-8 23M46 103l3 27 10 23" fill="none" stroke="var(--pants)" stroke-width="9"/>
+      <path d="m20 153-8 3m47-3 8 3" fill="none" stroke="var(--shoes)" stroke-width="7"/>
+      <path d="M35 42v9" fill="none" stroke="var(--skin)" stroke-width="8"/>
+      <circle cx="39" cy="27" r="15" fill="var(--skin)"/>
+      <path d="M24 27Q23 10 40 10q16 0 15 17-6-5-12-12-7 9-19 12" fill="var(--hair)"/>
+      <circle cx="34" cy="28" r="1.3" fill="#20252a" stroke="none"/><circle cx="44" cy="28" r="1.3" fill="#20252a" stroke="none"/>
+      <path d="M35 34q4 3 8 0" fill="none" stroke="#20252a" stroke-width="1.5"/>
+      <path d="M31 53 39 67l8-14" fill="none" stroke="var(--detail)" stroke-width="2"/>
+    </g>
+    <pattern id="p0" width="80" height="160" patternUnits="userSpaceOnUse"><use href="#peep" style="--skin:#dfab86;--shirt:#c7e277;--pants:#4b5967;--shoes:#f0ede4;--hair:#392d29;--detail:#f7f2e7"/></pattern>
+    <pattern id="p1" width="80" height="160" patternUnits="userSpaceOnUse"><use href="#peep" style="--skin:#a96f50;--shirt:#f2a17d;--pants:#282d33;--shoes:#f0ede4;--hair:#201d1b;--detail:#fff1e5"/></pattern>
+    <pattern id="p2" width="80" height="160" patternUnits="userSpaceOnUse"><use href="#peep" style="--skin:#f0c7a1;--shirt:#6ca8a1;--pants:#414b61;--shoes:#e9e4d6;--hair:#9c6742;--detail:#e6f6e4"/></pattern>
+    <pattern id="p3" width="80" height="160" patternUnits="userSpaceOnUse"><use href="#peep" style="--skin:#81543e;--shirt:#dfca9f;--pants:#6d5d57;--shoes:#f0ede4;--hair:#17191b;--detail:#252a31"/></pattern>
+    <pattern id="p4" width="80" height="160" patternUnits="userSpaceOnUse"><use href="#peep" style="--skin:#e6b995;--shirt:#8999bd;--pants:#303c50;--shoes:#f5eee4;--hair:#342b28;--detail:#e8ecfa"/></pattern>
+    <pattern id="p5" width="80" height="160" patternUnits="userSpaceOnUse"><use href="#peep" style="--skin:#bb805d;--shirt:#d87e63;--pants:#364944;--shoes:#f4e9dd;--hair:#2d2523;--detail:#ffe8d8"/></pattern>
+    <pattern id="p6" width="80" height="160" patternUnits="userSpaceOnUse"><use href="#peep" style="--skin:#f2d1b2;--shirt:#b4c9a0;--pants:#514b60;--shoes:#f5eee4;--hair:#665044;--detail:#f6f0d7"/></pattern>
+  </defs>
+  <rect width="1200" height="160" y="0" fill="url(#p0)"/>
+  <rect width="1200" height="160" y="160" fill="url(#p1)"/>
+  <rect width="1200" height="160" y="320" fill="url(#p2)"/>
+  <rect width="1200" height="160" y="480" fill="url(#p3)"/>
+  <rect width="1200" height="160" y="640" fill="url(#p4)"/>
+  <rect width="1200" height="160" y="800" fill="url(#p5)"/>
+  <rect width="1200" height="160" y="960" fill="url(#p6)"/>
+</svg>

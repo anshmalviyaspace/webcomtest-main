@@ -4,6 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: process.env.GITHUB_ACTIONS === "true" ? "/webcomtest-main/" : "/",
   server: {
     // true = listen on all interfaces; "::" alone can break "localhost" on some Windows setups
     host: true,
