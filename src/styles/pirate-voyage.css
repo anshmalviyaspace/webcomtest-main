@@ -112,7 +112,7 @@ html.fine #cur,html.fine #ping{display:block}
 #cloudA svg{display:block;width:300px;height:80px}
 
 /* Full-screen chapter pages sit inside the moving pirate scene. */
-.chapter-views{left:210px;top:130px;width:1180px;height:640px;z-index:12;opacity:0;pointer-events:none;will-change:transform,opacity}
+.chapter-views{left:260px;top:130px;width:1080px;height:640px;z-index:12;opacity:0;pointer-events:none;will-change:transform,opacity}
 .chapter-page{position:absolute;inset:0;display:none;overflow:hidden;padding:36px 46px 30px;border:3px solid var(--line);border-radius:28px;background:rgba(230,224,207,.96);box-shadow:0 9px 0 -2px var(--paper),0 9px 0 1px var(--line);color:var(--ink)}
 #frame[data-page="services"] #page-services,
 #frame[data-page="approach"] #page-approach,
@@ -126,51 +126,51 @@ html.fine #cur,html.fine #ping{display:block}
 .chapter-heading>p:last-child{max-width:800px;margin:8px 0 10px;font:400 27px/1.3 "Sorts Mill Goudy",serif}
 .services-page{grid-template-rows:auto minmax(0,1fr) auto;align-content:stretch;gap:12px}
 .service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px}
-.service-card{display:grid;grid-template-columns:38px 1fr 24px;align-items:start;gap:9px;min-height:0;padding:11px 12px 10px;border:2px solid var(--line);border-radius:17px;background:#f0eadb;box-shadow:0 4px 0 -1px rgba(230,224,207,.85),0 4px 0 0 var(--line)}
+.service-card{display:grid;grid-template-columns:38px 1fr 24px;align-items:start;gap:8px;min-height:0;padding:9px 10px 8px;border:2px solid var(--line);border-radius:17px;background:#f0eadb;box-shadow:0 4px 0 -1px rgba(230,224,207,.85),0 4px 0 0 var(--line)}
 .service-card>span{display:grid;width:34px;height:34px;place-items:center;border:1px solid #6c8240;border-radius:50%;color:#617a35;font:700 12px/1 "Open Sans",sans-serif}
-.service-card h3{margin:0;color:var(--ink);font:400 30px/1.02 "Goudy Bookletter 1911",serif;letter-spacing:-.02em}
-.service-card p{margin:6px 0 0;color:#554d40;font:400 21px/1.22 "Sorts Mill Goudy",serif}
+.service-card h3{margin:0;color:var(--ink);font:400 27px/1.02 "Goudy Bookletter 1911",serif;letter-spacing:-.02em}
+.service-card p{margin:5px 0 0;color:#554d40;font:400 19px/1.2 "Sorts Mill Goudy",serif}
 .service-card>b{color:#71883e;font:400 25px/1 Georgia,serif;text-align:right}
 .chapter-cta{display:inline-flex;width:fit-content;align-items:center;gap:17px;padding:14px 23px 12px;border:2px solid var(--line);border-radius:999px;background:#ece7d8;box-shadow:0 5px 0 -1px rgba(230,224,207,.8),0 5px 0 0 var(--line);color:var(--ink);font:600 15px/1 "Josefin Sans",sans-serif;letter-spacing:.05em;text-transform:uppercase;transition:transform .2s,box-shadow .2s}
 .chapter-cta:hover{transform:translateY(2px);box-shadow:0 3px 0 -1px rgba(230,224,207,.8),0 3px 0 0 var(--line)}
 .chapter-cta span{font:400 22px/1 Georgia,serif}
 
 .approach-page{grid-template-rows:auto minmax(0,1fr);align-content:center;gap:28px;padding-block:38px}
-.approach-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);align-items:end;gap:56px}
-.approach-copy h2{max-width:800px;font-size:66px}
-.approach-summary p{max-width:560px;margin:0 0 18px;font:400 29px/1.35 "Sorts Mill Goudy",serif}
+.approach-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);align-items:end;gap:40px}
+.approach-copy h2{max-width:800px;font-size:58px}
+.approach-summary p{max-width:560px;margin:0 0 14px;font:400 25px/1.3 "Sorts Mill Goudy",serif}
 .approach-steps{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch;gap:0;list-style:none;padding:22px 0 0}
 .approach-steps::before{position:absolute;top:60px;left:7%;right:7%;border-top:2px dashed rgba(32,28,21,.55);content:""}
 .chapter-views .approach-step{position:relative;z-index:1;display:flex;grid-template-columns:none;flex-direction:column;align-items:flex-start;min-width:0;padding:0 27px 0 20px}
 .chapter-views .approach-step:hover{padding:0 27px 0 20px}
 .approach-step+.approach-step{border-left:1px solid rgba(32,28,21,.2)}
-.step-number{display:grid;width:76px;height:76px;place-items:center;border:2px solid var(--line);border-radius:50%;background:var(--paper);box-shadow:0 5px 0 -1px var(--paper),0 5px 0 0 var(--line);color:#657e37;font:700 21px/1 "Open Sans",sans-serif;letter-spacing:.08em}
+.step-number{display:grid;width:66px;height:66px;place-items:center;border:2px solid var(--line);border-radius:50%;background:var(--paper);box-shadow:0 5px 0 -1px var(--paper),0 5px 0 0 var(--line);color:#657e37;font:700 19px/1 "Open Sans",sans-serif;letter-spacing:.08em}
 .chapter-views .step-number{padding:0}
-.approach-step h3{margin:22px 0 8px;color:var(--ink);font:400 37px/1 "Goudy Bookletter 1911",serif;letter-spacing:-.03em}
-.approach-step p{max-width:260px;margin:0;color:#554d40;font:400 24px/1.32 "Sorts Mill Goudy",serif}
+.approach-step h3{margin:18px 0 7px;color:var(--ink);font:400 32px/1 "Goudy Bookletter 1911",serif;letter-spacing:-.03em}
+.approach-step p{max-width:260px;margin:0;color:#554d40;font:400 21px/1.28 "Sorts Mill Goudy",serif}
 
 .founders-page{grid-template-rows:auto minmax(0,1fr) auto;align-content:center;justify-items:stretch;gap:22px;text-align:left}
-.founders-intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);align-items:end;gap:56px}
-.founders-intro h2{max-width:800px;font-size:64px}
-.founders-description{max-width:560px;margin:0 0 4px;font:400 29px/1.35 "Sorts Mill Goudy",serif}
+.founders-intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);align-items:end;gap:40px}
+.founders-intro h2{max-width:800px;font-size:58px}
+.founders-description{max-width:560px;margin:0 0 4px;font:400 25px/1.3 "Sorts Mill Goudy",serif}
 .founder-profiles{display:grid;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
-.founder-profile{display:grid;grid-template-columns:240px minmax(0,1fr);align-items:center;gap:24px;min-width:0;padding:14px;border:2px solid var(--line);border-radius:20px;background:#f0eadb;box-shadow:0 5px 0 -1px var(--paper),0 5px 0 0 var(--line);text-align:left}
-.founder-portrait{width:240px;height:280px;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#e8e3d7}
+.founder-profile{display:grid;grid-template-columns:190px minmax(0,1fr);align-items:center;gap:18px;min-width:0;padding:12px;border:2px solid var(--line);border-radius:20px;background:#f0eadb;box-shadow:0 5px 0 -1px var(--paper),0 5px 0 0 var(--line);text-align:left}
+.founder-portrait{width:190px;height:220px;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:#e8e3d7}
 .founder-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 22%;filter:grayscale(1) contrast(1.04)}
-.founder-profile:first-child .founder-portrait img{transform:scale(1.6);transform-origin:center 28%}
-.founder-profile:nth-child(2) .founder-portrait img{object-position:center 40%}
+.founder-profile:first-child .founder-portrait img{transform:scale(1.5);transform-origin:center top}
+.founder-profile:nth-child(2) .founder-portrait img{object-position:center 76%;transform:scale(1.2);transform-origin:center 40%}
 .founder-profile>div>span{color:#677e39;font:700 17px/1.4 "Open Sans",sans-serif;letter-spacing:.12em}
-.founder-profile h3{margin:10px 0 0;color:var(--ink);font:400 49px/1.02 "Goudy Bookletter 1911",serif;letter-spacing:-.03em}
-.founder-profile>div>p{margin:9px 0 0;color:#554d40;font:400 23px/1.2 "Sorts Mill Goudy",serif}
+.founder-profile h3{margin:8px 0 0;color:var(--ink);font:400 42px/1.02 "Goudy Bookletter 1911",serif;letter-spacing:-.03em}
+.founder-profile>div>p{margin:7px 0 0;color:#554d40;font:400 21px/1.2 "Sorts Mill Goudy",serif}
 .founders-page .chapter-cta{justify-self:start}
 
 .contact-page{grid-template-columns:minmax(0,1fr) minmax(400px,.92fr);align-items:center;gap:30px;padding-inline:72px}
-.contact-copy h2{max-width:660px;font-size:78px}
-.contact-copy>p:not(.chapter-kicker){max-width:560px;margin:18px 0 24px;font:400 34px/1.45 "Sorts Mill Goudy",serif}
+.contact-copy h2{max-width:660px;font-size:68px}
+.contact-copy>p:not(.chapter-kicker){max-width:560px;margin:14px 0 20px;font:400 29px/1.35 "Sorts Mill Goudy",serif}
 .contact-email-cta{display:inline-flex;align-items:center;gap:22px;padding:17px 24px;border:2px solid var(--line);border-radius:999px;background:#ece7d8;box-shadow:0 5px 0 -1px var(--paper),0 5px 0 0 var(--line);color:var(--ink);font:600 34px/1 "Josefin Sans",sans-serif}
 .contact-email-cta span{color:#6b833c;font:400 25px/1 Georgia,serif}
 .contact-copy .contact-small-note{margin-top:11px;color:#746b5d;font:700 19px/1.4 "Open Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase}
-.signal-art{position:relative;display:grid;min-height:430px;place-items:center;overflow:hidden;border:1px solid rgba(22,19,14,.22);border-radius:50%;background:rgba(215,210,194,.4)}
+.signal-art{position:relative;display:grid;min-height:360px;place-items:center;overflow:hidden;border:1px solid rgba(22,19,14,.22);border-radius:50%;background:rgba(215,210,194,.4)}
 .signal-ring{position:absolute;width:330px;aspect-ratio:1;border:1px solid rgba(22,19,14,.45);border-radius:50%}
 .signal-ring-two{width:245px;border-style:dashed}
 .signal-compass{position:relative;z-index:2;display:grid;width:170px;height:170px;place-items:center;border:3px solid var(--line);border-radius:50%;background:#e6e0cf;box-shadow:0 7px 0 -2px rgba(230,224,207,.8),0 7px 0 0 var(--line);font:700 14px/1 "Open Sans",sans-serif}
@@ -212,15 +212,15 @@ html.fine #cur,html.fine #ping{display:block}
 }
 
 /* Tall canvases use the portrait design box at every viewport width. */
-.portrait .chapter-views{left:50px;top:135px;width:700px;height:1230px}
+.portrait .chapter-views{left:70px;top:175px;width:660px;height:1150px}
 .portrait .chapter-page{padding:28px 30px 26px;border-radius:24px}
 .portrait .chapter-page h2{font-size:76px}
 .portrait .chapter-kicker{font-size:18px}
 .portrait .services-page{grid-template-rows:auto minmax(0,1fr) auto;gap:14px}
-.portrait .service-grid{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-rows:minmax(136px,1fr);gap:10px}
-.portrait .service-card{grid-template-columns:42px minmax(0,1fr) 28px;min-height:136px;padding:10px 14px}
-.portrait .service-card h3{font-size:36px}
-.portrait .service-card p{font-size:27px;line-height:1.26}
+.portrait .service-grid{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-rows:minmax(112px,1fr);gap:8px}
+.portrait .service-card{grid-template-columns:38px minmax(0,1fr) 24px;min-height:112px;padding:8px 11px}
+.portrait .service-card h3{font-size:31px}
+.portrait .service-card p{font-size:23px;line-height:1.2}
 .portrait .chapter-cta{padding:17px 22px;font-size:25px}
 .portrait .approach-page{grid-template-rows:auto minmax(0,1fr);gap:24px;padding-block:30px}
 .portrait .approach-top{grid-template-columns:minmax(0,1fr);gap:12px}
@@ -234,8 +234,8 @@ html.fine #cur,html.fine #ping{display:block}
 .portrait .approach-step p{font-size:23px}
 .portrait .founders-page{grid-template-rows:auto auto auto;gap:18px;align-content:center}
 .portrait .founders-intro{grid-template-columns:minmax(0,1fr);gap:10px}
-.portrait .founders-intro h2{font-size:72px}
-.portrait .founders-description{font-size:30px}
+.portrait .founders-intro h2{font-size:64px}
+.portrait .founders-description{font-size:27px}
 .portrait .founder-profiles{width:100%;grid-template-columns:minmax(0,1fr);gap:14px;align-content:center}
 .portrait .founder-profile{height:fit-content;grid-template-columns:minmax(150px,230px) minmax(0,1fr);align-items:center;gap:18px;padding:12px}
 .portrait .founder-portrait{width:100%;height:230px}
@@ -244,11 +244,11 @@ html.fine #cur,html.fine #ping{display:block}
 .portrait .founder-profile h3{font-size:42px;overflow-wrap:anywhere}
 .portrait .founder-profile>div>p{font-size:22px}
 .portrait .contact-page{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:16px;padding-inline:30px}
-.portrait .contact-copy h2{max-width:670px;font-size:78px}
-.portrait .contact-copy>p:not(.chapter-kicker){margin:12px 0 18px;font-size:34px}
+.portrait .contact-copy h2{max-width:670px;font-size:68px}
+.portrait .contact-copy>p:not(.chapter-kicker){margin:10px 0 15px;font-size:30px}
 .portrait .contact-copy p.contact-small-note{margin-top:10px;font-size:18px;line-height:1.35}
 .portrait .contact-email-cta{max-width:100%;padding:17px 20px;font-size:30px;overflow-wrap:anywhere}
-.portrait .signal-art{min-height:390px}
+.portrait .signal-art{min-height:330px}
 
 @media(max-width:520px){
   .portrait .approach-steps{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-rows:minmax(120px,auto)}

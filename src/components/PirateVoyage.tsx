@@ -472,7 +472,7 @@ const PirateVoyage = () => {
             <span className="hero-word hero-word-3" aria-hidden="true">be</span><br />
             <span className="hero-word hero-word-4" aria-hidden="true">seen.</span>
           </h1>
-          <p className="intro-note">Websites, social, content and practical AI.</p>
+          <p className="intro-note">Websites, social, content, marketing and practical AI.</p>
           <a className="pill" href="#" data-chapter="services">Explore services</a>
         </div>
         <div className="spr" id="ship" aria-hidden="true" />
